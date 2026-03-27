@@ -671,7 +671,7 @@
     q15:3, // Apenas I, II e IV
     q16:4, // t=40 s
     q17:1, // 5 minutos
-    q18:3, // 193 dias
+    q18:1, // 4,6 h
     q19:3, // 5,0 s
     q20:1, // 21,6 s
   };
@@ -746,8 +746,8 @@
       err:'No trecho de chuva, ele percorre 15 km em 15 min. Esse mesmo trecho, a 90 km/h, levaria 10 min. Logo, o aumento no tempo total de viagem é de 5 min.'
     },
     q18:{
-      ok:'Correto! Vamos entender:  5 bilhões de km = 5×10¹² km = 5×10¹⁵ m. Assim, t = (5×10¹⁵)/(3×10⁸) ≈ 1,67×10⁷ s. Convertendo: 1,67×10⁷/86400 ≈ 193 dias.',
-      err:'Converta a distância para metros: 5×10¹² km = 5×10¹⁵ m. Então, t = (5×10¹⁵)/(3×10⁸) ≈ 1,67×10⁷ s, o que corresponde a aproximadamente 193 dias.'
+      ok:'Correto! Vamos entender:  5 bilhões de km = 5×10<sup>9</sup> km = 5×10<sup>12</sup> m. Assim, t = (5×10<sup>12</sup>)/(3×10<sup>8</sup>) ≈ 1,67×10<sup>4</sup> s. Convertendo: 1,67×10<sup>4</sup>/3600 ≈ 4,6 h.',
+      err:'Converta a distância para metros: 5×10<sup>9</sup> km = 5×10<sup>12</sup> m. Então, t = (5×10<sup>12</sup>)/(3×10<sup>8</sup>) ≈ 1,67×10<sup>4</sup> s, o que corresponde a aproximadamente 4,6 h.'
     },
     q19:{
       ok:'Correto! Vamos entender:  s_A = 6t; s_B = 10(t−2). Encontro: 6t = 10t−20 → −4t=−20 → t=5s.',
