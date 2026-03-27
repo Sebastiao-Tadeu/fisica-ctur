@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Física – MU: Exercícios de Aprofundamento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#F5F2EC;
+      --paper:#FDFAF4;
+      --surface2:#EEE9DF;
+      --ink:#1A1A18;
+      --muted:#6B6860;
+      --line:rgba(0,0,0,.1);
+      --primary:#1B4F8A;
+      --primary-light:#EAF0FA;
+      --accent:#C05A00;
+      --accent-light:#FFF3E8;
+      --ok:#2D6E2D;
+      --ok-bg:#EAF4EA;
+      --ok-border:#7BBF7B;
+      --err:#8B1A1A;
+      --err-bg:#FBF0F0;
+      --err-border:#D07070;
+      --radius:12px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+    .wrap{max-width:820px;margin:0 auto;padding:32px 16px 72px}
+
+    /* HERO */
+    .hero{
+      background:var(--primary);
+      border-radius:20px;padding:32px 28px;margin-bottom:24px;
+      position:relative;overflow:hidden;
+    }
+    .hero::after{
+      content:"";position:absolute;top:-40px;right:-40px;
+      width:260px;height:260px;border-radius:50%;
+      background:rgba(255,255,255,.05);pointer-events:none;
+    }
+    .eyebrow{
+      display:inline-block;font-family:'Syne',sans-serif;
+      font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+      color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);
+      padding:5px 11px;border-radius:999px;margin-bottom:14px;
+      border:1px solid rgba(255,255,255,.15);
+    }
+    .hero h1{
+      font-family:'Syne',sans-serif;font-size:clamp(26px,5vw,38px);
+      font-weight:800;line-height:1.1;color:#fff;margin-bottom:10px;
+    }
+    .hero p{color:rgba(255,255,255,.7);font-size:15px;line-height:1.65;max-width:54ch}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+    .chip{
+      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);
+      border-radius:8px;padding:6px 12px;font-size:12px;color:rgba(255,255,255,.8);
+    }
+    .chip strong{color:#fff}
+
+    /* ID PANEL */
+    .panel{
+      background:var(--paper);border:1px solid var(--line);
+      border-radius:var(--radius);padding:22px;margin-bottom:18px;
+    }
+    .panel-title{
+      font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+      letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;
+    }
+    .id-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    @media(max-width:580px){.id-grid{grid-template-columns:1fr}}
+    .field-label{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;
+      text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+    input[type=text],input[type=email],select{
+      width:100%;padding:10px 12px;background:#fff;
+      border:1.5px solid rgba(0,0,0,.13);border-radius:9px;
+      color:var(--ink);font-size:14px;font-family:inherit;
+      outline:none;transition:border-color .2s;-webkit-appearance:none;
+    }
+    input:focus,select:focus{border-color:var(--primary)}
+    input.error,select.error{border-color:var(--err-border);background:var(--err-bg)}
+    select option{background:#fff}
+
+    /* SECTION */
+    .sec-header{display:flex;align-items:center;gap:12px;margin:30px 0 12px}
+    .sec-badge{
+      font-family:'Syne',sans-serif;font-size:10px;font-weight:700;
+      letter-spacing:.12em;text-transform:uppercase;
+      padding:5px 11px;border-radius:999px;white-space:nowrap;
+    }
+    .sec-badge.blue{background:var(--primary-light);color:var(--primary);border:1px solid rgba(27,79,138,.2)}
+    .sec-badge.orange{background:var(--accent-light);color:var(--accent);border:1px solid rgba(192,90,0,.2)}
+    .sec-badge.green{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-border)}
+    .sec-badge.gray{background:var(--surface2);color:var(--muted);border:1px solid var(--line)}
+    .sec-line{flex:1;height:1px;background:var(--line)}
+    .sec-title-txt{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--ink)}
+
+    /* QCARD */
+    .qcard{
+      background:var(--paper);border:1px solid var(--line);
+      border-radius:var(--radius);padding:20px;margin:10px 0;
+      transition:border-color .2s,box-shadow .2s;
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
+    }
+    .qcard:hover{box-shadow:0 4px 14px rgba(0,0,0,.07)}
+    .qcard.ok{border-color:var(--ok-border);background:#FAFDF8}
+    .qcard.err{border-color:var(--err-border);background:#FDF8F8}
+
+    .qhead{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+    .qnum{
+      flex-shrink:0;width:30px;height:30px;border-radius:7px;
+      background:var(--primary-light);color:var(--primary);
+      font-family:'Syne',sans-serif;font-weight:700;font-size:13px;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .qsource{
+      font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+      color:var(--accent);background:var(--accent-light);
+      padding:2px 7px;border-radius:5px;margin-left:auto;white-space:nowrap;flex-shrink:0;
+    }
+    .qtxt{font-size:15px;line-height:1.72;color:var(--ink)}
+    .qtxt strong{color:var(--primary);font-weight:600}
+
+    .context-tag{
+      display:inline-block;font-size:11px;background:var(--surface2);
+      border:1px solid var(--line);border-radius:6px;
+      padding:3px 8px;color:var(--muted);margin-bottom:10px;
+    }
+    .tip{
+      font-size:13px;color:var(--accent);background:var(--accent-light);
+      border-left:3px solid var(--accent);
+      padding:9px 12px;border-radius:0 9px 9px 0;
+      margin:10px 0;line-height:1.55;
+    }
+    .formula-box{
+      background:var(--primary-light);border:1px solid rgba(27,79,138,.15);
+      border-radius:9px;padding:11px 16px;
+      font-family:'JetBrains Mono',monospace;
+      font-size:14px;color:var(--primary);
+      text-align:center;margin:12px 0;letter-spacing:.02em;
+    }
+    .data-box{
+      background:var(--surface2);border-radius:9px;
+      padding:11px 14px;margin:10px 0;font-size:13px;
+      line-height:1.7;color:var(--ink);
+    }
+    .data-box strong{color:var(--primary)}
+
+    /* Gráfico SVG inline */
+    .graph-wrap{
+      background:#fff;border:1px solid var(--line);
+      border-radius:10px;padding:12px;margin:12px 0;overflow:hidden;
+    }
+
+    .opts{display:grid;gap:9px;margin-top:14px}
+    .obtn{
+      width:100%;text-align:left;padding:11px 14px;
+      border-radius:9px;border:1.5px solid var(--line);
+      background:#fff;color:var(--ink);
+      font-size:14px;line-height:1.5;cursor:pointer;
+      font-family:'DM Sans',sans-serif;
+      transition:background .15s,border-color .15s,transform .08s;
+      display:flex;align-items:baseline;gap:10px;
+    }
+    .obtn:hover{background:var(--primary-light);border-color:rgba(27,79,138,.25)}
+    .obtn:active{transform:scale(.997)}
+    .obtn .opt-letter{
+      flex-shrink:0;width:22px;height:22px;border-radius:5px;
+      background:var(--surface2);border:1px solid var(--line);
+      font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+      color:var(--muted);display:inline-flex;align-items:center;justify-content:center;
+    }
+    .obtn.ok{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok)}
+    .obtn.ok .opt-letter{background:var(--ok);color:#fff;border-color:var(--ok)}
+    .obtn.show-correct{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok)}
+    .obtn.show-correct .opt-letter{background:var(--ok);color:#fff;border-color:var(--ok)}
+    .obtn.err{background:var(--err-bg);border-color:var(--err-border);color:var(--err)}
+    .obtn.err .opt-letter{background:var(--err);color:#fff;border-color:var(--err)}
+    .obtn:disabled{cursor:default}
+
+    .fb{display:none;margin-top:12px;padding:12px 14px;border-radius:9px;font-size:14px;line-height:1.6}
+    .fb.show{display:block}
+    .fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-border)}
+    .fb.err{background:var(--err-bg);color:var(--err);border:1px solid var(--err-border)}
+    .fb .math{font-family:'JetBrains Mono',monospace;font-size:13px;display:block;margin-top:6px;
+      background:rgba(0,0,0,.05);padding:6px 10px;border-radius:6px}
+
+    /* SCORE */
+    .score-card{
+      background:var(--primary);border-radius:20px;
+      padding:28px 22px;text-align:center;margin-top:28px;
+    }
+    .score-big{font-family:'Syne',sans-serif;font-size:60px;font-weight:800;color:#fff;line-height:1;margin-bottom:4px}
+    .score-big em{color:rgba(255,255,255,.45);font-style:normal;font-size:34px}
+    .score-sub{font-size:12px;color:rgba(255,255,255,.55);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+    .score-bar-wrap{background:rgba(255,255,255,.15);border-radius:999px;height:7px;margin:16px auto;max-width:300px;overflow:hidden}
+    .score-bar{height:100%;border-radius:999px;background:#fff;transition:width .9s cubic-bezier(.4,0,.2,1);width:0%}
+    .score-msg{font-size:15px;color:rgba(255,255,255,.75);margin-bottom:22px;line-height:1.6;max-width:46ch;margin-left:auto;margin-right:auto}
+    .score-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .sbtn{padding:11px 22px;border-radius:9px;font-size:14px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;letter-spacing:.04em;transition:opacity .15s,transform .1s}
+    .sbtn:hover{opacity:.85}
+    .sbtn:active{transform:translateY(1px)}
+    .sbtn-light{background:#fff;color:var(--primary);border:none}
+    .sbtn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,.35);color:rgba(255,255,255,.8)}
+    .sbtn-submit{background:linear-gradient(135deg,#C05A00,#E07820);color:#fff;border:none;font-size:15px;padding:13px 28px}
+    .sbtn-submit:disabled{opacity:.4;cursor:not-allowed}
+    .submit-status{margin-top:14px;padding:12px 15px;border-radius:9px;font-size:14px;line-height:1.55;display:none}
+    .submit-status.show{display:block}
+    .submit-status.sending{background:rgba(255,255,255,.12);color:rgba(255,255,255,.85)}
+    .submit-status.done{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-border)}
+    .submit-status.fail{background:var(--err-bg);color:var(--err);border:1px solid var(--err-border)}
+    .footer-note{text-align:center;font-size:12px;color:rgba(0,0,0,.3);margin-top:22px}
+
+    @media(max-width:600px){.wrap{padding:16px 11px 52px}.hero{padding:22px 16px}.qtxt{font-size:14px}.obtn{font-size:13px}}
+  </style>
+</head>
+<body>
+<main class="wrap">
+<div style="margin-bottom:14px"><a href="../../index.html" style="color:var(--primary);text-decoration:none;font-weight:700">← Voltar para a página inicial</a></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">Física · 1º Ano · CTUR — Aprofundamento</div>
+    <h1>Movimento Uniforme<br/>Exercícios</h1>
+    <p>Questões de vestibulares e livros didáticos sobre velocidade média, MU e encontro de móveis. Nível progressivo.</p>
+    <div class="chips">
+      <div class="chip"><strong>20</strong> questões</div>
+      <div class="chip">Vestibulares: <strong>Fuvest · UE-RJ · Fatec · PUC · UF-RJ</strong></div>
+      <div class="chip">Nível <strong>progressivo</strong></div>
+    </div>
+  </section>
+
+  <!-- IDENTIFICAÇÃO -->
+  <div class="panel">
+    <div class="panel-title">Identificação</div>
+    <div class="id-grid">
+      <label><span class="field-label">Nome completo</span>
+        <input type="text" id="inputNome" placeholder="Seu nome"/></label>
+      <label><span class="field-label">Turma</span>
+        <select id="inputTurma">
+          <option value="">Selecione...</option>
+          <option>1º Ano – Meio Ambiente</option>
+          <option>1º Ano – Hospedagem</option>
+          <option>1º Ano – Agroecologia</option>
+        </select></label>
+      <label><span class="field-label">E-mail</span>
+        <input type="email" id="inputEmail" placeholder="seu@email.com"/></label>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       BLOCO 1 · VELOCIDADE MÉDIA
+  ══════════════════════════════ -->
+  <div class="sec-header">
+    <span class="sec-badge blue">Bloco 1</span>
+    <span class="sec-title-txt">Velocidade Média</span>
+    <div class="sec-line"></div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="qcard" id="q1">
+    <div class="context-tag">Questão 5 — Livro didático</div>
+    <div class="qhead"><div class="qnum">1</div></div>
+    <div class="qtxt">Um automóvel percorre a distância entre São Paulo e Jundiaí (<strong>60 km</strong>) com velocidade escalar média de <strong>40 km/h</strong>; entre Jundiaí e Campinas (<strong>30 km</strong>) com velocidade escalar média de <strong>60 km/h</strong>. Qual a velocidade escalar média do automóvel entre São Paulo e Campinas?</div>
+    <div class="formula-box">v_m = Δs_total / Δt_total</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q1','fb1',this,1)"><span class="opt-letter">A</span>45 km/h</button>
+      <button class="obtn" onclick="mc('q1','fb1',this,2)"><span class="opt-letter">B</span>48 km/h</button>
+      <button class="obtn" onclick="mc('q1','fb1',this,3)"><span class="opt-letter">C</span>50 km/h</button>
+      <button class="obtn" onclick="mc('q1','fb1',this,4)"><span class="opt-letter">D</span>52 km/h</button>
+    </div>
+    <div class="fb" id="fb1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qcard" id="q2">
+    <div class="context-tag">Questão 6 — Livro didático</div>
+    <div class="qhead"><div class="qnum">2</div></div>
+    <div class="qtxt">Um móvel percorre a <strong>metade</strong> de um percurso com velocidade escalar média de <strong>60 km/h</strong> e, imediatamente a seguir, a outra metade com velocidade escalar média de <strong>40 km/h</strong>. Qual é a velocidade escalar média no percurso todo?</div>
+    <div class="tip">Chame o percurso total de 2d. Calcule o tempo em cada trecho e some.</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q2','fb2',this,1)"><span class="opt-letter">A</span>50 km/h</button>
+      <button class="obtn" onclick="mc('q2','fb2',this,2)"><span class="opt-letter">B</span>48 km/h</button>
+      <button class="obtn" onclick="mc('q2','fb2',this,3)"><span class="opt-letter">C</span>46 km/h</button>
+      <button class="obtn" onclick="mc('q2','fb2',this,4)"><span class="opt-letter">D</span>52 km/h</button>
+    </div>
+    <div class="fb" id="fb2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qcard" id="q3">
+    <div class="context-tag">Questão 24 — Livro didático</div>
+    <div class="qhead"><div class="qnum">3</div></div>
+    <div class="qtxt">Um automóvel percorre o segmento AB com velocidade constante de módulo <em>v</em> e o segmento BC, de mesmo comprimento, com velocidade constante de módulo <em>2v</em>. A velocidade escalar média no percurso ABC foi de:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q3','fb3',this,1)"><span class="opt-letter">A</span>3v</button>
+      <button class="obtn" onclick="mc('q3','fb3',this,2)"><span class="opt-letter">B</span>3v/2</button>
+      <button class="obtn" onclick="mc('q3','fb3',this,3)"><span class="opt-letter">C</span>4v/3</button>
+      <button class="obtn" onclick="mc('q3','fb3',this,4)"><span class="opt-letter">D</span>3v/4</button>
+    </div>
+    <div class="fb" id="fb3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qcard" id="q4">
+    <div class="context-tag">Questão 25 — UE-RJ</div>
+    <div class="qhead"><div class="qnum">4</div><span class="qsource">UE-RJ</span></div>
+    <div class="qtxt">Ao se deslocar do Rio de Janeiro a Porto Alegre, um avião percorre essa distância com velocidade escalar média <em>v</em> no primeiro <strong>1/9 do trajeto</strong> e <em>2v</em> no trecho restante. A velocidade escalar média do avião no percurso total foi igual a:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q4','fb4',this,1)"><span class="opt-letter">A</span>9v/5</button>
+      <button class="obtn" onclick="mc('q4','fb4',this,2)"><span class="opt-letter">B</span>8v/5</button>
+      <button class="obtn" onclick="mc('q4','fb4',this,3)"><span class="opt-letter">C</span>5v/3</button>
+      <button class="obtn" onclick="mc('q4','fb4',this,4)"><span class="opt-letter">D</span>5v/4</button>
+    </div>
+    <div class="fb" id="fb4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qcard" id="q5">
+    <div class="context-tag">Questão 26 — Fatec-SP</div>
+    <div class="qhead"><div class="qnum">5</div><span class="qsource">Fatec-SP</span></div>
+    <div class="qtxt">Um carro se desloca entre duas cidades em duas etapas. Na primeira etapa, desloca-se com velocidade escalar média de <strong>80 km/h</strong> durante <strong>3,5 h</strong>. Após permanecer parado por <strong>2,0 horas</strong>, o carro percorre os <strong>180 km restantes</strong> com velocidade escalar média de <strong>40 km/h</strong>. A velocidade escalar média do carro no percurso entre as cidades foi, em km/h:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q5','fb5',this,1)"><span class="opt-letter">A</span>40</button>
+      <button class="obtn" onclick="mc('q5','fb5',this,2)"><span class="opt-letter">B</span>46</button>
+      <button class="obtn" onclick="mc('q5','fb5',this,3)"><span class="opt-letter">C</span>56</button>
+      <button class="obtn" onclick="mc('q5','fb5',this,4)"><span class="opt-letter">D</span>64</button>
+    </div>
+    <div class="fb" id="fb5"></div>
+  </div>
+
+  <!-- ══════════════════════════════
+       BLOCO 2 · MU — ESPAÇO E TEMPO
+  ══════════════════════════════ -->
+  <div class="sec-header">
+    <span class="sec-badge orange">Bloco 2</span>
+    <span class="sec-title-txt">Movimento Uniforme — Espaço e Tempo</span>
+    <div class="sec-line"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qcard" id="q6">
+    <div class="context-tag">Questão 9 — Livro didático</div>
+    <div class="qhead"><div class="qnum">6</div></div>
+    <div class="qtxt">Uma estrada tem dois setores. No setor (1) a velocidade escalar foi constante e igual a <strong>108 km/h</strong> durante <strong>15 min</strong>. No setor (2) a velocidade escalar foi constante e igual a <strong>25 m/s</strong> durante <strong>1,0 h</strong>. Qual foi a velocidade escalar média da viagem toda, de A até B?</div>
+    <div class="tip">Converta tudo para a mesma unidade antes de calcular. 108 km/h = 30 m/s; 15 min = 900 s; 1,0 h = 3600 s.</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q6','fb6',this,1)"><span class="opt-letter">A</span>25,0 m/s</button>
+      <button class="obtn" onclick="mc('q6','fb6',this,2)"><span class="opt-letter">B</span>26,0 m/s</button>
+      <button class="obtn" onclick="mc('q6','fb6',this,3)"><span class="opt-letter">C</span>27,0 m/s</button>
+      <button class="obtn" onclick="mc('q6','fb6',this,4)"><span class="opt-letter">D</span>30,0 m/s</button>
+    </div>
+    <div class="fb" id="fb6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="qcard" id="q7">
+    <div class="context-tag">Questão 20 — Livro didático</div>
+    <div class="qhead"><div class="qnum">7</div></div>
+    <div class="qtxt">Um caminhão com <strong>20 m de comprimento</strong> e velocidade escalar constante de <strong>54 km/h</strong> inicia a travessia de uma ponte de <strong>45 m de extensão</strong>. Qual é o tempo de travessia? (Use apenas dois algarismos significativos.)</div>
+    <div class="tip">O caminhão termina a travessia quando sua traseira sai da ponte. A distância percorrida é: comprimento da ponte + comprimento do caminhão.</div>
+    <div class="data-box"><strong>54 km/h</strong> = 15 m/s<br/>Distância total = 45 + 20 = 65 m</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q7','fb7',this,1)"><span class="opt-letter">A</span>3,0 s</button>
+      <button class="obtn" onclick="mc('q7','fb7',this,2)"><span class="opt-letter">B</span>4,3 s</button>
+      <button class="obtn" onclick="mc('q7','fb7',this,3)"><span class="opt-letter">C</span>5,0 s</button>
+      <button class="obtn" onclick="mc('q7','fb7',this,4)"><span class="opt-letter">D</span>6,5 s</button>
+    </div>
+    <div class="fb" id="fb7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="qcard" id="q8">
+    <div class="context-tag">Questão 21 — Livro didático</div>
+    <div class="qhead"><div class="qnum">8</div></div>
+    <div class="qtxt">Um trem, constituído de 20 unidades de mesmo comprimento (uma máquina e 19 vagões), penetrou num túnel de <strong>2,0 km de extensão</strong> às <strong>13 h 14 min</strong> e, mantendo velocidade escalar constante de <strong>72 km/h</strong>, saiu completamente do túnel às <strong>13 h 16 min</strong>. Determine o comprimento de cada vagão.</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q8','fb8',this,1)"><span class="opt-letter">A</span>20 m</button>
+      <button class="obtn" onclick="mc('q8','fb8',this,2)"><span class="opt-letter">B</span>25 m</button>
+      <button class="obtn" onclick="mc('q8','fb8',this,3)"><span class="opt-letter">C</span>40 m</button>
+      <button class="obtn" onclick="mc('q8','fb8',this,4)"><span class="opt-letter">D</span>50 m</button>
+    </div>
+    <div class="fb" id="fb8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="qcard" id="q9">
+    <div class="context-tag">Questão 13 — Livro didático</div>
+    <div class="qhead"><div class="qnum">9</div></div>
+    <div class="qtxt">Uma estrela encontra-se a <strong>30 anos-luz da Terra</strong>. Quanto tempo demora uma sonda espacial lançada da Terra para chegar a ela, sendo sua velocidade de <strong>3,6 × 10⁴ km/h</strong>?</div>
+    <div class="data-box">
+      <strong>Dados:</strong><br/>
+      1 ano-luz = 9,0 × 10¹⁵ m<br/>
+      1 ano = 3 × 10⁷ s<br/>
+      3,6 × 10⁴ km/h = 10⁴ m/s
+    </div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q9','fb9',this,1)"><span class="opt-letter">A</span>2,7 × 10⁶ anos</button>
+      <button class="obtn" onclick="mc('q9','fb9',this,2)"><span class="opt-letter">B</span>9,0 × 10⁵ anos</button>
+      <button class="obtn" onclick="mc('q9','fb9',this,3)"><span class="opt-letter">C</span>3,0 × 10⁶ anos</button>
+      <button class="obtn" onclick="mc('q9','fb9',this,4)"><span class="opt-letter">D</span>1,0 × 10⁶ anos</button>
+    </div>
+    <div class="fb" id="fb9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="qcard" id="q10">
+    <div class="context-tag">Questão 16 — Livro didático</div>
+    <div class="qhead"><div class="qnum">10</div></div>
+    <div class="qtxt">O Sol encontra-se a <strong>150 milhões de quilômetros</strong> da Terra. Usando c = 3,0 × 10⁸ m/s, determine em quanto tempo a luz do Sol chega até a Terra.</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q10','fb10',this,1)"><span class="opt-letter">A</span>50 s</button>
+      <button class="obtn" onclick="mc('q10','fb10',this,2)"><span class="opt-letter">B</span>300 s</button>
+      <button class="obtn" onclick="mc('q10','fb10',this,3)"><span class="opt-letter">C</span>500 s</button>
+      <button class="obtn" onclick="mc('q10','fb10',this,4)"><span class="opt-letter">D</span>5000 s</button>
+    </div>
+    <div class="fb" id="fb10"></div>
+  </div>
+
+  <!-- ══════════════════════════════
+       BLOCO 3 · EQUAÇÃO HORÁRIA E CLASSIFICAÇÃO
+  ══════════════════════════════ -->
+  <div class="sec-header">
+    <span class="sec-badge green">Bloco 3</span>
+    <span class="sec-title-txt">Equação Horária e Classificação do Movimento</span>
+    <div class="sec-line"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="qcard" id="q11">
+    <div class="context-tag">Questão 15 — Livro didático</div>
+    <div class="qhead"><div class="qnum">11</div></div>
+    <div class="qtxt">Se num movimento acontecer que a velocidade escalar instantânea seja igual à velocidade escalar média, em qualquer intervalo de tempo, teremos então que o movimento é:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q11','fb11',this,1)"><span class="opt-letter">A</span>Retilíneo e acelerado</button>
+      <button class="obtn" onclick="mc('q11','fb11',this,2)"><span class="opt-letter">B</span>Retilíneo e uniforme</button>
+      <button class="obtn" onclick="mc('q11','fb11',this,3)"><span class="opt-letter">C</span>Retardado</button>
+      <button class="obtn" onclick="mc('q11','fb11',this,4)"><span class="opt-letter">D</span>Necessariamente progressivo</button>
+    </div>
+    <div class="fb" id="fb11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="qcard" id="q12">
+    <div class="context-tag">Questão 16 — PUC-RS</div>
+    <div class="qhead"><div class="qnum">12</div><span class="qsource">PUC-RS</span></div>
+    <div class="qtxt">A velocidade escalar no movimento uniforme é:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q12','fb12',this,1)"><span class="opt-letter">A</span>Variável</button>
+      <button class="obtn" onclick="mc('q12','fb12',this,2)"><span class="opt-letter">B</span>Constante em módulo, mas de sinal variável</button>
+      <button class="obtn" onclick="mc('q12','fb12',this,3)"><span class="opt-letter">C</span>Constante</button>
+      <button class="obtn" onclick="mc('q12','fb12',this,4)"><span class="opt-letter">D</span>Sempre negativa</button>
+    </div>
+    <div class="fb" id="fb12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="qcard" id="q13">
+    <div class="context-tag">Questão 17 — Livro didático</div>
+    <div class="qhead"><div class="qnum">13</div></div>
+    <div class="qtxt">A equação horária do movimento de um ponto material, em unidades do SI, é: <strong>s = 20 − 4,0t</strong>. O movimento é progressivo ou retrógrado? Qual é a velocidade escalar?</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q13','fb13',this,1)"><span class="opt-letter">A</span>Progressivo; v = 4,0 m/s</button>
+      <button class="obtn" onclick="mc('q13','fb13',this,2)"><span class="opt-letter">B</span>Retrógrado; v = 4,0 m/s</button>
+      <button class="obtn" onclick="mc('q13','fb13',this,3)"><span class="opt-letter">C</span>Retrógrado; v = 20 m/s</button>
+      <button class="obtn" onclick="mc('q13','fb13',this,4)"><span class="opt-letter">D</span>Progressivo; v = 20 m/s</button>
+    </div>
+    <div class="fb" id="fb13"></div>
+  </div>
+
+  <!-- Q14 — Gráfico v×t (Q64) -->
+  <div class="qcard" id="q14">
+    <div class="context-tag">Questão 64 — Livro didático</div>
+    <div class="qhead"><div class="qnum">14</div></div>
+    <div class="qtxt">Um ponto material P deslocou-se sobre uma trajetória retilínea durante 5 s. O gráfico abaixo representa sua velocidade algébrica em função do tempo. Analise as afirmativas:</div>
+    <div class="graph-wrap">
+      <svg viewBox="0 0 340 200" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block">
+        <defs>
+          <marker id="ax" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+            <polygon points="0 0,7 3.5,0 7" fill="#333"/>
+          </marker>
+        </defs>
+        <g stroke="#E0DDD6" stroke-width="0.8">
+          <line x1="60" y1="20" x2="60" y2="170"/>
+          <line x1="60" y1="170" x2="310" y2="170"/>
+          <line x1="58" y1="132" x2="310" y2="132"/>
+          <line x1="58" y1="95" x2="310" y2="95"/>
+          <line x1="58" y1="58" x2="310" y2="58"/>
+          <line x1="110" y1="20" x2="110" y2="172"/>
+          <line x1="160" y1="20" x2="160" y2="172"/>
+          <line x1="210" y1="20" x2="210" y2="172"/>
+          <line x1="260" y1="20" x2="260" y2="172"/>
+          <line x1="310" y1="20" x2="310" y2="172"/>
+        </g>
+        <line x1="60" y1="170" x2="318" y2="170" stroke="#333" stroke-width="1.5" marker-end="url(#ax)"/>
+        <line x1="60" y1="175" x2="60" y2="12" stroke="#333" stroke-width="1.5" marker-end="url(#ax)"/>
+        <g font-size="11" fill="#555" text-anchor="middle" font-family="DM Sans,sans-serif">
+          <text x="110" y="184">1</text>
+          <text x="160" y="184">2</text>
+          <text x="210" y="184">3</text>
+          <text x="260" y="184">4</text>
+          <text x="310" y="184">5</text>
+          <text x="190" y="198" font-size="12" font-weight="700" fill="#333">t (s)</text>
+        </g>
+        <g font-size="11" fill="#555" text-anchor="end" font-family="DM Sans,sans-serif">
+          <text x="54" y="174">-4</text>
+          <text x="54" y="136">0</text>
+          <text x="54" y="99">4</text>
+          <text x="54" y="62">8</text>
+          <text x="54" y="25">12</text>
+        </g>
+        <text x="18" y="100" font-size="12" font-weight="700" fill="#333" text-anchor="middle" transform="rotate(-90,18,100)" font-family="DM Sans,sans-serif">v (m/s)</text>
+        <line x1="60" y1="132" x2="310" y2="132" stroke="#C05A00" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="316" y="135" font-size="10" fill="#C05A00" font-family="DM Sans,sans-serif">v = 0</text>
+        <polyline points="60,20 110,132 260,170 310,132" fill="none" stroke="#1B4F8A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="60" cy="20" r="3.2" fill="#1B4F8A"/>
+        <circle cx="110" cy="132" r="3.2" fill="#1B4F8A"/>
+        <circle cx="260" cy="170" r="3.2" fill="#1B4F8A"/>
+        <circle cx="310" cy="132" r="3.2" fill="#1B4F8A"/>
+      </svg>
+    </div>
+    <div class="qtxt" style="margin-top:4px">São verdadeiras:</div>
+    <div class="data-box" style="margin-top:8px">
+      I. No primeiro segundo, o movimento é retrógrado, pois a velocidade escalar é decrescente.<br/>
+      II. No intervalo de 1 s a 4 s, o movimento é retrógrado, pois a velocidade escalar é negativa.<br/>
+      III. No quinto segundo, o movimento é progressivo, pois a velocidade escalar é positiva.<br/>
+      IV. Houve uma inversão no sentido do movimento.
+    </div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q14','fb14',this,1)"><span class="opt-letter">A</span>Todas</button>
+      <button class="obtn" onclick="mc('q14','fb14',this,2)"><span class="opt-letter">B</span>Apenas I e II</button>
+      <button class="obtn" onclick="mc('q14','fb14',this,3)"><span class="opt-letter">C</span>Apenas II e IV</button>
+      <button class="obtn" onclick="mc('q14','fb14',this,4)"><span class="opt-letter">D</span>Apenas I, II e III</button>
+    </div>
+    <div class="fb" id="fb14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="qcard" id="q15">
+    <div class="context-tag">Questão 63 — Livro didático</div>
+    <div class="qhead"><div class="qnum">15</div></div>
+    <div class="qtxt">Um garoto lança uma bolinha de tênis verticalmente para cima. A bolinha sobe até certo ponto, para instantaneamente e retorna para as mãos do garoto. A trajetória é orientada no sentido ascendente. Analise cada afirmativa:</div>
+    <div class="data-box">
+      I. Enquanto a bolinha estiver subindo, o movimento é progressivo.<br/>
+      II. Enquanto a bolinha estiver descendo, o movimento é retrógrado.<br/>
+      III. Na subida, a velocidade é negativa e na descida é positiva.<br/>
+      IV. Após a inversão de sentido, a velocidade escalar mudou de sinal.
+    </div>
+    <div class="qtxt" style="margin-top:8px">Estão corretas:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q15','fb15',this,1)"><span class="opt-letter">A</span>Todas</button>
+      <button class="obtn" onclick="mc('q15','fb15',this,2)"><span class="opt-letter">B</span>Apenas I e IV</button>
+      <button class="obtn" onclick="mc('q15','fb15',this,3)"><span class="opt-letter">C</span>Apenas I, II e IV</button>
+      <button class="obtn" onclick="mc('q15','fb15',this,4)"><span class="opt-letter">D</span>Apenas I, II e III</button>
+    </div>
+    <div class="fb" id="fb15"></div>
+  </div>
+
+  <!-- ══════════════════════════════
+       BLOCO 4 · ENCONTRO DE MÓVEIS E PROBLEMAS COMPLEXOS
+  ══════════════════════════════ -->
+  <div class="sec-header">
+    <span class="sec-badge gray">Bloco 4</span>
+    <span class="sec-title-txt">Encontro de Móveis e Problemas Complexos</span>
+    <div class="sec-line"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="qcard" id="q16">
+    <div class="context-tag">Questão 18 — Fuvest-SP</div>
+    <div class="qhead"><div class="qnum">16</div><span class="qsource">Fuvest-SP</span></div>
+    <div class="qtxt">Um automóvel que se desloca com velocidade escalar constante de <strong>72 km/h</strong> ultrapassa outro que se desloca com velocidade escalar constante de <strong>54 km/h</strong> na mesma estrada reta. O primeiro encontra-se <strong>200 m atrás</strong> do segundo no instante t = 0. O primeiro estará ao lado do segundo no instante:</div>
+    <div class="tip">Converta as velocidades para m/s e use as equações horárias. v₁ = 20 m/s; v₂ = 15 m/s.</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q16','fb16',this,1)"><span class="opt-letter">A</span>t = 10 s</button>
+      <button class="obtn" onclick="mc('q16','fb16',this,2)"><span class="opt-letter">B</span>t = 20 s</button>
+      <button class="obtn" onclick="mc('q16','fb16',this,3)"><span class="opt-letter">C</span>t = 30 s</button>
+      <button class="obtn" onclick="mc('q16','fb16',this,4)"><span class="opt-letter">D</span>t = 40 s</button>
+    </div>
+    <div class="fb" id="fb16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="qcard" id="q17">
+    <div class="context-tag">Questão 28 — Fuvest-SP</div>
+    <div class="qhead"><div class="qnum">17</div><span class="qsource">Fuvest-SP</span></div>
+    <div class="qtxt">Dirigindo-se a uma cidade próxima por uma autoestrada plana, um motorista estima seu tempo de viagem, considerando que consiga manter velocidade escalar média de <strong>90 km/h</strong>. Ao ser surpreendido pela chuva, decide reduzir sua velocidade escalar média para <strong>60 km/h</strong>, permanecendo assim até a chuva parar, <strong>quinze minutos mais tarde</strong>, quando retoma sua velocidade média inicial. Essa redução temporária aumenta seu tempo de viagem em relação à estimativa inicial em:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q17','fb17',this,1)"><span class="opt-letter">A</span>5 minutos</button>
+      <button class="obtn" onclick="mc('q17','fb17',this,2)"><span class="opt-letter">B</span>7,5 minutos</button>
+      <button class="obtn" onclick="mc('q17','fb17',this,3)"><span class="opt-letter">C</span>10 minutos</button>
+      <button class="obtn" onclick="mc('q17','fb17',this,4)"><span class="opt-letter">D</span>15 minutos</button>
+    </div>
+    <div class="fb" id="fb17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="qcard" id="q18">
+    <div class="context-tag">Questão 30 — LHC / Física moderna</div>
+    <div class="qhead"><div class="qnum">18</div></div>
+    <div class="qtxt">No LHC, prótons são acelerados até atingirem velocidade v = 2,97 × 10⁸ m/s, muito próxima da velocidade da luz. Imagine que um feixe de prótons, nessa velocidade, fosse lançado em direção ao planeta Netuno, a <strong>5 bilhões de quilômetros</strong> da Terra. O tempo, aproximado, para atingi-lo seria:</div>
+    <div class="data-box"><strong>5 bilhões de km</strong> = 5 × 10¹² km = 5 × 10¹⁵ m<br/>v ≈ 3 × 10⁸ m/s</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q18','fb18',this,1)"><span class="opt-letter">A</span>4,6 h</button>
+      <button class="obtn" onclick="mc('q18','fb18',this,2)"><span class="opt-letter">B</span>19 dias</button>
+      <button class="obtn" onclick="mc('q18','fb18',this,3)"><span class="opt-letter">C</span>193 dias</button>
+      <button class="obtn" onclick="mc('q18','fb18',this,4)"><span class="opt-letter">D</span>1,9 dia</button>
+    </div>
+    <div class="fb" id="fb18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="qcard" id="q19">
+    <div class="context-tag">Questão 32 — Livro didático</div>
+    <div class="qhead"><div class="qnum">19</div></div>
+    <div class="qtxt">Dois pontos materiais, A e B, percorrem a mesma trajetória, no mesmo sentido, com movimentos uniformes. O móvel A parte no instante t = 0 com velocidade escalar <strong>6,0 m/s</strong>; o móvel B parte do mesmo ponto, <strong>2,0 s depois</strong>, com velocidade escalar <strong>10 m/s</strong>. Depois de quanto tempo, após a partida de A, os móveis se encontrarão?</div>
+    <div class="formula-box">s_A = s_B → iguale as equações horárias</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q19','fb19',this,1)"><span class="opt-letter">A</span>3,0 s</button>
+      <button class="obtn" onclick="mc('q19','fb19',this,2)"><span class="opt-letter">B</span>4,0 s</button>
+      <button class="obtn" onclick="mc('q19','fb19',this,3)"><span class="opt-letter">C</span>5,0 s</button>
+      <button class="obtn" onclick="mc('q19','fb19',this,4)"><span class="opt-letter">D</span>6,0 s</button>
+    </div>
+    <div class="fb" id="fb19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="qcard" id="q20">
+    <div class="context-tag">Questão 30 — Trens em linhas paralelas</div>
+    <div class="qhead"><div class="qnum">20</div></div>
+    <div class="qtxt">Dois trens, A e B, de comprimentos <strong>100 m e 200 m</strong>, respectivamente, correm em linhas paralelas e retilíneas com velocidades escalares de valores absolutos <strong>30 km/h e 20 km/h</strong>. Qual o intervalo de tempo que um trem demora para passar pelo outro quando <strong>os trens se deslocam em sentidos opostos</strong>?</div>
+    <div class="tip">Em sentidos opostos, a velocidade relativa é a soma dos módulos. A distância percorrida é a soma dos comprimentos dos dois trens.</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q20','fb20',this,1)"><span class="opt-letter">A</span>21,6 s</button>
+      <button class="obtn" onclick="mc('q20','fb20',this,2)"><span class="opt-letter">B</span>36 s</button>
+      <button class="obtn" onclick="mc('q20','fb20',this,3)"><span class="opt-letter">C</span>18 s</button>
+      <button class="obtn" onclick="mc('q20','fb20',this,4)"><span class="opt-letter">D</span>12 s</button>
+    </div>
+    <div class="fb" id="fb20"></div>
+  </div>
+
+  <!-- SCORE -->
+  <section class="score-card" id="scoreBox">
+    <div class="score-big"><span id="scoreNow">0</span><em>/20</em></div>
+    <div class="score-sub">questões corretas</div>
+    <div class="score-bar-wrap"><div class="score-bar" id="scoreBar"></div></div>
+    <div class="score-msg" id="scoreMsg">Resolva as questões para ver seu resultado.</div>
+    <div class="score-btns">
+      <button class="sbtn sbtn-ghost" onclick="resetQuiz()">Recomeçar</button>
+      <button class="sbtn sbtn-submit" id="btnEnviar" onclick="enviarResultado()">Enviar ao professor</button>
+    </div>
+    <div class="submit-status" id="submitStatus"></div>
+  </section>
+
+  <p class="footer-note">CTUR · UFRRJ · Física — MU: Exercícios de Aprofundamento</p>
+
+</main>
+<script>
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyD_EezbCujcym_dsfZcE-qn9eWlmOb4P7xOc4im7ya3h4MAn3_bNz-54uFrqa10Qny9A/exec";
+  const TOTAL = 20;
+  const QUIZ_ID = 'mu-aprofundamento';
+  const QUIZ_TITULO = 'MU: Exercícios de Aprofundamento';
+  const QUIZ_VERSAO = 'v1';
+
+  const answerKey = {
+    q1:1,  // 45 km/h
+    q2:2,  // 48 km/h
+    q3:3,  // 4v/3
+    q4:1,  // 9v/5
+    q5:2,  // 46 km/h
+    q6:2,  // 26,0 m/s
+    q7:2,  // 4,3 s
+    q8:1,  // 20 m
+    q9:2,  // 9,0 × 10⁵ anos
+    q10:3, // 500 s
+    q11:2, // Retilíneo e uniforme
+    q12:3, // Constante
+    q13:2, // Retrógrado; v=4,0 m/s
+    q14:3, // Apenas II e IV
+    q15:3, // Apenas I, II e IV
+    q16:4, // t=40 s
+    q17:1, // 5 minutos
+    q18:3, // 193 dias
+    q19:3, // 5,0 s
+    q20:1, // 21,6 s
+  };
+
+  const feedbacks = {
+    q1:{
+      ok:'Correto! Vamos entender:  t₁ = 60/40 = 1,5 h; t₂ = 30/60 = 0,5 h. Logo, Δt = 2,0 h e Δs = 90 km. Assim, v_m = 90/2 = 45 km/h.',
+      err:'t₁ = 60/40 = 1,5 h e t₂ = 30/60 = 0,5 h. Então, Δt = 2,0 h e Δs = 90 km. Portanto, v_m = 90/2 = 45 km/h.'
+    },
+    q2:{
+      ok:'Correto! Vamos entender:  Chamando d cada metade: t₁ = d/60; t₂ = d/40. v_m = 2d/(d/60+d/40) = 2/(1/60+1/40) = 2/(2/120+3/120) = 2×120/5 = 48 km/h.',
+      err:'Use v_m = 2d / (d/v₁ + d/v₂) = 2v₁v₂/(v₁+v₂) = 2×60×40/(60+40) = 4800/100 = 48 km/h.'
+    },
+    q3:{
+      ok:'Correto! Vamos entender:  Sejam os trechos de comprimento d. t_AB = d/v; t_BC = d/2v. v_m = 2d/(d/v + d/2v) = 2d / (3d/2v) = 4v/3.',
+      err:'t_AB = d/v; t_BC = d/2v. v_m = 2d/(d/v + d/2v) = 2d·2v/(2d+d) = 4dv/3d = 4v/3.'
+    },
+    q4:{
+      ok:'Correto! Vamos entender:  Seja D a distância total. t₁ = (D/9)/v = D/9v e t₂ = (8D/9)/2v = 4D/9v. Então, Δt = 5D/9v e v_m = D/(5D/9v) = 9v/5.',
+      err:'Seja D a distância total. t₁ = D/9v e t₂ = 4D/9v. Assim, Δt = 5D/9v e v_m = D/(5D/9v) = 9v/5.'
+    },
+    q5:{
+      ok:'Correto! Vamos entender:  s₁ = 80×3,5 = 280 km; s₂ = 180 km. Δs = 460 km. Δt = 3,5+2,0+180/40 = 3,5+2+4,5 = 10 h. v_m = 460/10 = 46 km/h.',
+      err:'s₁=280 km; t_parado=2h; t₂=180/40=4,5h. Δt=10h. v_m=460/10=46 km/h.'
+    },
+    q6:{
+      ok:'Correto! Vamos entender:  No setor 1: 108 km/h = 30 m/s e 15 min = 900 s, então s₁ = 30×900 = 27.000 m. No setor 2: s₂ = 25×3600 = 90.000 m. Logo, Δs = 117.000 m, Δt = 4.500 s e v_m = 117.000/4.500 = 26,0 m/s.',
+      err:'Converta tudo para a mesma unidade: 108 km/h = 30 m/s e 15 min = 900 s. Assim, s₁ = 27.000 m, s₂ = 90.000 m, Δs = 117.000 m e Δt = 4.500 s. Portanto, v_m = 26,0 m/s.'
+    },
+    q7:{
+      ok:'Correto! Vamos entender:  Distância total = 45+20 = 65 m. v = 54 km/h = 15 m/s. t = 65/15 ≈ 4,3 s.',
+      err:'O caminhão percorre 45+20=65 m. v=15 m/s. t=65/15≈4,3 s.'
+    },
+    q8:{
+      ok:'Correto! Vamos entender:  v=72km/h=20m/s; t=2min=120s. Δs=20×120=2400m. Comprimento do trem: 2400−2000=400m. Cada unidade=400/20=20m.',
+      err:'v=20m/s; t=120s; Δs=2400m. Δs=túnel+trem → trem=400m. 400÷20=20m por unidade.'
+    },
+    q9:{
+      ok:'Correto! Vamos entender:  Δs = 30×9,0×10¹⁵ = 2,7×10¹⁷ m. Como v = 10⁴ m/s, temos t = 2,7×10¹³ s. Convertendo para anos: t = (2,7×10¹³)/(3×10⁷) = 9,0×10⁵ anos.',
+      err:'Use Δs = 30×9,0×10¹⁵ = 2,7×10¹⁷ m e v = 10⁴ m/s. Então t = 2,7×10¹³ s. Em anos: t = (2,7×10¹³)/(3×10⁷) = 9,0×10⁵ anos.'
+    },
+    q10:{
+      ok:'Correto! Vamos entender:  Δs=1,5×10¹¹m. t=1,5×10¹¹/(3×10⁸)=5×10²=500s.',
+      err:'150 milhões de km = 1,5×10¹¹m. t=1,5×10¹¹/(3×10⁸)=500s.'
+    },
+    q11:{
+      ok:'Correto! Vamos entender:  Se a velocidade instantânea é sempre igual à velocidade média, a velocidade é constante → MRU (retilíneo e uniforme).',
+      err:'Velocidade instantânea = velocidade média em qualquer intervalo → velocidade constante → MRU.'
+    },
+    q12:{
+      ok:'Correto! Vamos entender:  No MU, a velocidade escalar é constante — mesmo módulo e mesmo sinal durante todo o movimento.',
+      err:'No MU, por definição, a velocidade vetorial é constante: mesmo módulo, direção e sentido.'
+    },
+    q13:{
+      ok:'Correto! Vamos entender:  O coeficiente de t é −4,0, portanto v = −4,0 m/s. Sinal negativo → movimento retrógrado. Velocidade escalar = |v| = 4,0 m/s.',
+      err:'Em s = s₀ + v·t, o coeficiente de t é a velocidade: v = −4,0 m/s. Negativo → retrógrado; |v| = 4,0 m/s.'
+    },
+    q14:{
+      ok:'Correto! Vamos entender:  I é falsa, porque movimento retrógrado depende do sinal da velocidade, não do fato de ela ser decrescente. II é verdadeira, pois entre 1 s e 4 s a velocidade é negativa. III é falsa, porque no quinto segundo a velocidade ainda é negativa, aproximando-se de zero apenas no final. IV é verdadeira: houve uma inversão de sentido, quando a velocidade mudou de positiva para negativa.',
+      err:'I é falsa: movimento retrógrado não significa velocidade decrescente. II é verdadeira: entre 1 s e 4 s a velocidade é negativa. III é falsa: no quinto segundo a velocidade ainda é negativa. IV é verdadeira: houve uma inversão de sentido. Logo, a resposta correta é apenas II e IV.'
+    },
+    q15:{
+      ok:'Correto! Vamos entender:  I: subindo, sentido=ascendente=positivo, v>0 → progressivo ✓. II: descendo, v<0 → retrógrado ✓. III: FALSO (na subida v é positiva). IV: após a inversão, v muda de sinal ✓. Corretas: I, II e IV.',
+      err:'III está errada: na subida (sentido orientado para cima), v é positiva. I, II e IV estão corretas.'
+    },
+    q16:{
+      ok:'Correto! Vamos entender:  s₁ = −200+20t; s₂ = 15t. Encontro: −200+20t = 15t → 5t=200 → t=40 s.',
+      err:'s₁=−200+20t (parte 200m atrás); s₂=15t. Igualar: 20t−200=15t → t=40s.'
+    },
+    q17:{
+      ok:'Correto! Vamos entender:  Em 15 min = 0,25 h, a 60 km/h, o motorista percorre 15 km. Se estivesse a 90 km/h, percorreria esses mesmos 15 km em 15/90 h = 1/6 h = 10 min. Portanto, o atraso é de 15 − 10 = 5 min.',
+      err:'No trecho de chuva, ele percorre 15 km em 15 min. Esse mesmo trecho, a 90 km/h, levaria 10 min. Logo, o aumento no tempo total de viagem é de 5 min.'
+    },
+    q18:{
+      ok:'Correto! Vamos entender:  5 bilhões de km = 5×10¹² km = 5×10¹⁵ m. Assim, t = (5×10¹⁵)/(3×10⁸) ≈ 1,67×10⁷ s. Convertendo: 1,67×10⁷/86400 ≈ 193 dias.',
+      err:'Converta a distância para metros: 5×10¹² km = 5×10¹⁵ m. Então, t = (5×10¹⁵)/(3×10⁸) ≈ 1,67×10⁷ s, o que corresponde a aproximadamente 193 dias.'
+    },
+    q19:{
+      ok:'Correto! Vamos entender:  s_A = 6t; s_B = 10(t−2). Encontro: 6t = 10t−20 → −4t=−20 → t=5s.',
+      err:'A parte em t=0: s_A=6t. B parte em t=2s: s_B=10(t−2). Igualar: 6t=10t−20 → t=5s.'
+    },
+    q20:{
+      ok:'Correto! Vamos entender:  Em sentidos opostos, a velocidade relativa é 30 + 20 = 50 km/h = 125/9 m/s. A distância total a ser vencida é 100 + 200 = 300 m. Logo, t = 300/(125/9) = 21,6 s.',
+      err:'Use velocidade relativa: 50 km/h = 125/9 m/s. Como a distância total é 300 m, o tempo é t = 300/(125/9) = 21,6 s.'
+    }
+  };
+
+  const state = {};
+
+  function disableQuestion(card){card.querySelectorAll('.obtn').forEach(b=>b.disabled=true)}
+  function showCorrect(cardId){
+    const card=document.getElementById(cardId);
+    const btns=[...card.querySelectorAll('.obtn')];
+    const ri=answerKey[cardId]-1;
+    if(btns[ri]&&!btns[ri].classList.contains('ok')) btns[ri].classList.add('show-correct');
+  }
+  function mc(cardId,fbId,btn,chosen){
+    if(state[cardId]!==undefined) return;
+    const correct=answerKey[cardId];
+    const isRight=chosen===correct;
+    state[cardId]={chosen,isRight};
+    const card=document.getElementById(cardId);
+    const fb=document.getElementById(fbId);
+    btn.classList.add(isRight?'ok':'err');
+    card.classList.add(isRight?'ok':'err');
+    fb.className='fb show '+(isRight?'ok':'err');
+    fb.innerHTML=(isRight?'✓ ':'✗ ')+feedbacks[cardId][isRight?'ok':'err'];
+    if(!isRight) showCorrect(cardId);
+    disableQuestion(card);
+    updateScore();
+  }
+  function updateScore(){
+    const answered=Object.keys(state).length;
+    const points=Object.values(state).filter(s=>s.isRight).length;
+    document.getElementById('scoreNow').textContent=points;
+    document.getElementById('scoreBar').style.width=Math.round(points/TOTAL*100)+'%';
+    let msg='Resolva as questões para ver seu resultado.';
+    if(answered>0&&answered<TOTAL) msg=`${answered} de ${TOTAL} respondidas · ${points} corretas até agora.`;
+    if(answered===TOTAL){
+      if(points<=7) msg='Você terminou. Revise os feedbacks com cuidado — foque nas equações horárias e conversão de unidades.';
+      else if(points<=13) msg='Bom trabalho! Você domina os fundamentos. Revise os erros, especialmente velocidade média com trechos diferentes.';
+      else if(points<=17) msg='Muito bem! Resultado sólido. Fique atento às questões de encontro de móveis e referencial.';
+      else msg='Excelente! Domínio completo do MU. Parabéns!';
+    }
+    document.getElementById('scoreMsg').textContent=msg;
+  }
+  function resetQuiz(){
+    for(const k of Object.keys(state)) delete state[k];
+    document.querySelectorAll('.qcard').forEach(card=>{
+      card.classList.remove('ok','err');
+      card.querySelectorAll('.obtn').forEach(b=>{b.disabled=false;b.classList.remove('ok','err','show-correct');});
+    });
+    document.querySelectorAll('.fb').forEach(fb=>{fb.className='fb';fb.innerHTML='';});
+    const st=document.getElementById('submitStatus');
+    st.className='submit-status';st.innerHTML='';
+    document.getElementById('btnEnviar').disabled=false;
+    updateScore();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  async function enviarResultado(){
+    const nome=document.getElementById('inputNome').value.trim();
+    const turma=document.getElementById('inputTurma').value;
+    const email=document.getElementById('inputEmail').value.trim();
+    let ok=true;
+    ['inputNome','inputTurma'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(!el.value.trim()){el.classList.add('error');ok=false;}
+      else el.classList.remove('error');
+    });
+    if(!ok){alert('Preencha Nome e Turma antes de enviar.');return;}
+    const answered=Object.keys(state).length;
+    if(answered<TOTAL){if(!confirm(`Você respondeu ${answered} de ${TOTAL} questões. Enviar assim mesmo?`))return;}
+    const btn=document.getElementById('btnEnviar');
+    const st=document.getElementById('submitStatus');
+    btn.disabled=true;
+    st.className='submit-status sending show';
+    st.innerHTML='⏳ Enviando…';
+    const points=Object.values(state).filter(s=>s.isRight).length;
+    const payload={timestamp:new Date().toLocaleString('pt-BR'),quizId:QUIZ_ID,quizTitulo:QUIZ_TITULO,versao:QUIZ_VERSAO,nome,turma,email,
+      nota:points,total:TOTAL,percentual:Math.round(points/TOTAL*100)};
+    for(const qid of Object.keys(answerKey)){
+      const s=state[qid];
+      payload['resp_'+qid]=s?s.chosen:'';
+      payload['ok_'+qid]=s?(s.isRight?1:0):'';
+    }
+    try{
+      await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',
+        headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      st.className='submit-status done show';
+      st.innerHTML=`✅ Enviado! ${nome} · ${turma} · ${points}/${TOTAL} (${payload.percentual}%)`;
+    }catch(e){
+      st.className='submit-status fail show';
+      st.innerHTML='❌ Falha no envio. Verifique sua conexão e tente novamente.';
+      btn.disabled=false;
+    }
+  }
+  updateScore();
+</script>
+</body>
+</html>
