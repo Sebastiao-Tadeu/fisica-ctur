@@ -3,66 +3,187 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quizzes de Física – CTUR</title>
-  <style>
+  <title>Práticas de Física – CTUR</title>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=tDIwpb32JjB-kE2Zv3lWZuACMRKnMoncumxBbDVOTLvAnYoGylb82CchhrmAn6NqKn-_LPXOA8iim9KEURktQR2o-wWrFlCHDTLVVq8vB6eDVdsU1-eIH69dSNzbOIfi5EWzSRZk3kdEwymZOZvSDziAKf0s2K_Z9ltaUjcsvjHgDbIAoHc_ZsWTON-xIWM9IHOTO-yLZpCD0fb8361pzszufz0IpJhWUQy8GO75hDSLqfa8x1C5a61kEl9OC0MIjC1blAoRdZiPFfxtUl2LIA" charset="UTF-8"></script><style>
     :root{
-      --bg:#f5f2ec;--card:#fffaf4;--ink:#1a1a18;--muted:#6b6860;--line:rgba(0,0,0,.1);
-      --primary:#1b4f8a;--accent:#c05a00;--ok:#2d6e2d;
+      --bg:#f4f1eb;
+      --card:#fffdf9;
+      --ink:#1d1d1b;
+      --muted:#5f5b53;
+      --line:rgba(0,0,0,.08);
+      --primary:#1b4f8a;
+      --primary-2:#12375f;
+      --accent:#d5821f;
+      --soft:#eaf1fb;
     }
-    *{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
-    .wrap{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
-    .hero{background:var(--primary);color:#fff;padding:34px 28px;border-radius:20px;margin-bottom:24px}
-    .hero h1{margin:0 0 10px;font-size:clamp(28px,4vw,44px)}
-    .hero p{margin:0;max-width:70ch;line-height:1.6;color:rgba(255,255,255,.86)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,.05)}
-    .tag{display:inline-block;background:#eaf0fa;color:var(--primary);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;margin-bottom:12px}
-    h2{margin:0 0 8px;font-size:22px} p{line-height:1.6;color:var(--muted)}
-    .meta{font-size:14px;margin:14px 0 18px;color:var(--muted)}
-    .btn{display:inline-block;background:var(--primary);color:#fff;text-decoration:none;padding:11px 16px;border-radius:10px;font-weight:700}
-    .btn:hover{opacity:.92}
-    .btn.secondary{background:#fff;color:var(--primary);border:1px solid var(--primary)}
-    .section-title{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:26px 0 14px;font-weight:700}
-    .tips{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-top:24px;line-height:1.7}
-    code{background:#eee9df;padding:2px 6px;border-radius:6px}
-    ul{margin:8px 0 0 18px}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(27,79,138,.12), transparent 22%),
+        radial-gradient(circle at top left, rgba(213,130,31,.10), transparent 24%),
+        var(--bg);
+      color:var(--ink);
+    }
+    .wrap{max-width:1120px;margin:0 auto;padding:24px 16px 60px}
+    .hero{
+      position:relative; overflow:hidden;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#fff; padding:38px 28px; border-radius:24px;
+      box-shadow:0 18px 40px rgba(18,55,95,.18); margin-bottom:28px;
+    }
+    .hero::after{
+      content:""; position:absolute; right:-40px; top:-40px; width:180px; height:180px;
+      border-radius:50%; background:rgba(255,255,255,.08);
+    }
+    .hero-badge{
+      display:inline-block; background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.18); padding:8px 12px;
+      border-radius:999px; font-size:12px; font-weight:700; letter-spacing:.04em; margin-bottom:14px;
+    }
+    .hero h1{margin:0 0 12px;font-size:clamp(30px, 5vw, 48px);line-height:1.08}
+    .hero p{margin:0;max-width:72ch;line-height:1.7;color:rgba(255,255,255,.9);font-size:17px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .btn{
+      display:inline-block; text-decoration:none; border-radius:12px;
+      padding:12px 18px; font-weight:700; transition:transform .15s ease, opacity .15s ease;
+    }
+    .btn:hover{transform:translateY(-1px); opacity:.96}
+    .btn-primary{background:#fff;color:var(--primary);box-shadow:0 10px 22px rgba(0,0,0,.10)}
+    .btn-secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.28)}
+    .intro-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:18px;margin-bottom:28px}
+    .panel{
+      background:var(--card);border:1px solid var(--line);border-radius:18px;
+      padding:22px;box-shadow:0 8px 24px rgba(0,0,0,.05);
+    }
+    .panel h2{margin:0 0 10px;font-size:24px}
+    .panel p{margin:0;line-height:1.7;color:var(--muted)}
+    .steps{display:grid;gap:12px}
+    .step{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+    .step:last-child{border-bottom:none;padding-bottom:0}
+    .step:first-child{padding-top:0}
+    .step-num{
+      flex:0 0 34px; width:34px; height:34px; display:grid; place-items:center;
+      border-radius:50%; background:var(--soft); color:var(--primary); font-weight:700;
+    }
+    .step strong{display:block;margin-bottom:4px;font-size:15px}
+    .step span{color:var(--muted);line-height:1.55;font-size:14px}
+    .section-title{
+      margin:0 0 14px; font-size:14px; text-transform:uppercase;
+      letter-spacing:.08em; color:var(--muted); font-weight:700;
+    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:18px}
+    .card{
+      background:var(--card); border:1px solid var(--line); border-radius:18px;
+      padding:22px; box-shadow:0 8px 24px rgba(0,0,0,.05);
+      display:flex; flex-direction:column; min-height:250px;
+    }
+    .tag{
+      display:inline-block; align-self:flex-start; background:var(--soft); color:var(--primary);
+      padding:7px 11px; border-radius:999px; font-size:12px; font-weight:700; margin-bottom:12px;
+    }
+    .card h3{margin:0 0 8px;font-size:24px}
+    .card p{margin:0 0 18px;line-height:1.65;color:var(--muted);flex:1}
+    .meta{font-size:14px;color:var(--muted);margin-bottom:18px;line-height:1.6}
+    .open-link{
+      display:inline-block; align-self:flex-start; background:var(--primary); color:#fff;
+      text-decoration:none; padding:11px 16px; border-radius:12px; font-weight:700;
+    }
+    .notice{
+      margin-top:28px; background:#fff; border-left:5px solid var(--accent); border-radius:16px;
+      padding:18px 20px; border-top:1px solid var(--line); border-right:1px solid var(--line);
+      border-bottom:1px solid var(--line); line-height:1.7; color:var(--muted);
+      box-shadow:0 8px 24px rgba(0,0,0,.04);
+    }
+    .footer{margin-top:26px;text-align:center;color:var(--muted);font-size:14px;line-height:1.7}
+    @media (max-width: 860px){
+      .intro-grid{grid-template-columns:1fr}
+      .hero{padding:30px 22px}
+      .panel, .card{padding:18px}
+    }
   </style>
 </head>
 <body>
   <main class="wrap">
     <section class="hero">
-      <h1>Quizzes de Física</h1>
-      <p>Projeto pronto para hospedar vários quizzes no mesmo repositório do GitHub Pages, com envio dos resultados para Google Planilhas via Google Apps Script.</p>
+      <div class="hero-badge">CTUR • Práticas de Física</div>
+      <h1>Espaço de prática dos conteúdos estudados</h1>
+      <p>
+        Aqui você encontrará listas e quizzes de Física para revisar, praticar e fortalecer
+        a aprendizagem. Novas atividades serão adicionadas com o tempo, acompanhando os
+        conteúdos trabalhados em sala.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#quizzes">Ver atividades</a>
+        <a class="btn btn-secondary" href="#como-funciona">Como funciona</a>
+      </div>
     </section>
 
-    <div class="section-title">Quizzes disponíveis</div>
+    <section class="intro-grid" id="como-funciona">
+      <article class="panel">
+        <h2>Bem-vindo(a)!</h2>
+        <p>
+          Este ambiente foi criado para apoiar seus estudos com atividades interativas.
+          A proposta é simples: você acessa a lista disponível, informa seu nome e sua turma,
+          responde com atenção e acompanha seu desempenho ao final. Use este espaço como uma
+          oportunidade para praticar, identificar dúvidas e revisar os pontos mais importantes.
+        </p>
+      </article>
+
+      <aside class="panel">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <strong>Escolha a atividade</strong>
+              <span>Selecione abaixo a lista ou quiz que deseja responder.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <strong>Informe seus dados</strong>
+              <span>Preencha corretamente seu nome e sua turma antes de começar.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <strong>Pratique com atenção</strong>
+              <span>Leia cada questão com calma e aproveite os feedbacks para aprender mais.</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <h2 class="section-title" id="quizzes">Atividades disponíveis</h2>
+
     <section class="grid">
       <article class="card">
         <div class="tag">1º ano • Movimento Uniforme</div>
-        <h2>MU: Exercícios de Aprofundamento</h2>
-        <p>Versão revisada, com feedbacks mais didáticos, identificação por nome e turma, e pronta para envio ao professor.</p>
-        <div class="meta"><strong>ID:</strong> <code>mu-aprofundamento</code><br><strong>Turmas:</strong> 10, 11, 13 e 16</div>
-        <a class="btn" href="quizzes/mu-aprofundamento/">Abrir quiz</a>
-      </article>
-
-      <article class="card">
-        <div class="tag">Modelo reutilizável</div>
-        <h2>Template para novo quiz</h2>
-        <p>Use este modelo como base para criar os próximos quizzes sem precisar começar do zero. Basta duplicar a pasta e trocar questões, gabarito e feedbacks.</p>
-        <div class="meta"><strong>Pasta:</strong> <code>templates/quiz-template.html</code></div>
-        <a class="btn secondary" href="templates/quiz-template.html">Ver template</a>
+        <h3>Lista de prática: MU</h3>
+        <p>
+          Atividade de aprofundamento sobre movimento uniforme, com questões objetivas,
+          leitura de gráfico e feedback ao final.
+        </p>
+        <div class="meta">
+          <strong>Turmas:</strong> 10, 11, 13 e 16
+        </div>
+        <a class="open-link" href="quizzes/mu-aprofundamento/">Iniciar atividade</a>
       </article>
     </section>
 
-    <section class="tips">
-      <strong>Como adicionar novos quizzes</strong>
-      <ul>
-        <li>Duplique a pasta <code>quizzes/mu-aprofundamento</code> ou o arquivo <code>templates/quiz-template.html</code>.</li>
-        <li>Troque o título, o gabarito, os feedbacks e as questões.</li>
-        <li>Mantenha a mesma URL do Apps Script para centralizar tudo em uma única planilha.</li>
-        <li>Na planilha, filtre pelos campos <code>quizId</code>, <code>quizTitulo</code>, <code>turma</code> e <code>versao</code>.</li>
-      </ul>
+    <section class="notice">
+      <strong>Importante:</strong> novas listas e quizzes serão publicados neste espaço ao longo do período letivo.
+      Volte aqui sempre que um novo conteúdo for estudado em sala.
     </section>
+
+    <div class="footer">
+      Colégio Técnico da UFRRJ - Ambiente de apoio aos estudos de Física
+    </div>
   </main>
 </body>
 </html>
