@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Física – Dinâmica: Guia de Estudos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#F5F2EC;
+      --paper:#FDFAF4;
+      --surface2:#EEE9DF;
+      --ink:#1A1A18;
+      --muted:#6B6860;
+      --line:rgba(0,0,0,.1);
+      --primary:#1B4F8A;
+      --primary-light:#EAF0FA;
+      --accent:#C05A00;
+      --accent-light:#FFF3E8;
+      --ok:#2D6E2D;
+      --ok-bg:#EAF4EA;
+      --ok-border:#7BBF7B;
+      --err:#8B1A1A;
+      --err-bg:#FBF0F0;
+      --err-border:#D07070;
+      --radius:12px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+    .wrap{max-width:820px;margin:0 auto;padding:32px 16px 72px}
+
+    /* HERO */
+    .hero{
+      background:var(--primary);
+      border-radius:20px;padding:32px 28px;margin-bottom:24px;
+      position:relative;overflow:hidden;
+    }
+    .hero::after{
+      content:"";position:absolute;top:-40px;right:-40px;
+      width:260px;height:260px;border-radius:50%;
+      background:rgba(255,255,255,.05);pointer-events:none;
+    }
+    .eyebrow{
+      display:inline-block;font-family:'Syne',sans-serif;
+      font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+      color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);
+      padding:5px 11px;border-radius:999px;margin-bottom:14px;
+      border:1px solid rgba(255,255,255,.15);
+    }
+    .hero h1{
+      font-family:'Syne',sans-serif;font-size:clamp(26px,5vw,38px);
+      font-weight:800;line-height:1.1;color:#fff;margin-bottom:10px;
+    }
+    .hero p{color:rgba(255,255,255,.7);font-size:15px;line-height:1.65;max-width:56ch}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+    .chip{
+      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);
+      border-radius:8px;padding:6px 12px;font-size:12px;color:rgba(255,255,255,.8);
+    }
+    .chip strong{color:#fff}
+
+    /* AVISO */
+    .note{
+      background:var(--accent-light);border:1px solid rgba(192,90,0,.25);
+      border-left:4px solid var(--accent);border-radius:10px;
+      padding:14px 16px;margin-bottom:18px;font-size:13.5px;line-height:1.6;color:var(--ink);
+    }
+    .note strong{color:var(--accent)}
+
+    /* ID PANEL */
+    .panel{
+      background:var(--paper);border:1px solid var(--line);
+      border-radius:var(--radius);padding:22px;margin-bottom:18px;
+    }
+    .panel-title{
+      font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+      letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;
+    }
+    .id-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    @media(max-width:580px){.id-grid{grid-template-columns:1fr}}
+    .field-label{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;
+      text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+    input[type=text],input[type=email],select{
+      width:100%;padding:10px 12px;background:#fff;
+      border:1.5px solid rgba(0,0,0,.13);border-radius:9px;
+      color:var(--ink);font-size:14px;font-family:inherit;
+      outline:none;transition:border-color .2s;-webkit-appearance:none;
+    }
+    input:focus,select:focus{border-color:var(--primary)}
+    input.error,select.error{border-color:var(--err-border);background:var(--err-bg)}
+    select option{background:#fff}
+
+    /* SECTION */
+    .sec-header{display:flex;align-items:center;gap:12px;margin:34px 0 12px}
+    .sec-badge{
+      font-family:'Syne',sans-serif;font-size:10px;font-weight:700;
+      letter-spacing:.12em;text-transform:uppercase;
+      padding:5px 11px;border-radius:999px;white-space:nowrap;
+    }
+    .sec-badge.blue{background:var(--primary-light);color:var(--primary);border:1px solid rgba(27,79,138,.2)}
+    .sec-badge.orange{background:var(--accent-light);color:var(--accent);border:1px solid rgba(192,90,0,.2)}
+    .sec-badge.green{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-border)}
+    .sec-badge.gray{background:var(--surface2);color:var(--muted);border:1px solid var(--line)}
+    .sec-line{flex:1;height:1px;background:var(--line)}
+    .sec-title-txt{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--ink)}
+
+    /* THEORY CARD */
+    .theory{
+      background:var(--paper);border:1px solid var(--line);
+      border-left:4px solid var(--accent);
+      border-radius:var(--radius);padding:20px 22px;margin:10px 0 14px;
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
+    }
+    .theory-tag{
+      display:inline-flex;align-items:center;gap:6px;
+      font-family:'Syne',sans-serif;font-size:10px;font-weight:700;
+      letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+      background:var(--accent-light);border:1px solid rgba(192,90,0,.2);
+      padding:4px 10px;border-radius:999px;margin-bottom:12px;
+    }
+    .theory h3{
+      font-family:'Syne',sans-serif;font-size:17px;font-weight:700;
+      color:var(--ink);margin-bottom:10px;line-height:1.3;
+    }
+    .theory p{font-size:14.5px;line-height:1.72;color:var(--ink);margin:8px 0}
+    .theory p strong{color:var(--primary);font-weight:600}
+    .theory ul{margin:8px 0 8px 4px;padding:0;list-style:none}
+    .theory li{
+      font-size:14.5px;line-height:1.65;color:var(--ink);
+      padding:4px 0 4px 20px;position:relative;
+    }
+    .theory li::before{
+      content:"▸";position:absolute;left:2px;top:4px;
+      color:var(--accent);font-size:13px;
+    }
+    .theory li strong{color:var(--primary);font-weight:600}
+
+    /* QCARD */
+    .qcard{
+      background:var(--paper);border:1px solid var(--line);
+      border-radius:var(--radius);padding:20px;margin:10px 0;
+      transition:border-color .2s,box-shadow .2s;
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
+    }
+    .qcard:hover{box-shadow:0 4px 14px rgba(0,0,0,.07)}
+    .qcard.ok{border-color:var(--ok-border);background:#FAFDF8}
+    .qcard.err{border-color:var(--err-border);background:#FDF8F8}
+
+    .qhead{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+    .qnum{
+      flex-shrink:0;width:30px;height:30px;border-radius:7px;
+      background:var(--primary-light);color:var(--primary);
+      font-family:'Syne',sans-serif;font-weight:700;font-size:13px;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .qsource{
+      font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+      color:var(--accent);background:var(--accent-light);
+      padding:2px 7px;border-radius:5px;margin-left:auto;white-space:nowrap;flex-shrink:0;
+    }
+    .qtxt{font-size:15px;line-height:1.72;color:var(--ink)}
+    .qtxt strong{color:var(--primary);font-weight:600}
+
+    .context-tag{
+      display:inline-block;font-size:11px;background:var(--surface2);
+      border:1px solid var(--line);border-radius:6px;
+      padding:3px 8px;color:var(--muted);margin-bottom:10px;
+    }
+    .tip{
+      font-size:13px;color:var(--accent);background:var(--accent-light);
+      border-left:3px solid var(--accent);
+      padding:9px 12px;border-radius:0 9px 9px 0;
+      margin:10px 0;line-height:1.55;
+    }
+    .formula-box{
+      background:var(--primary-light);border:1px solid rgba(27,79,138,.15);
+      border-radius:9px;padding:11px 16px;
+      font-family:'JetBrains Mono',monospace;
+      font-size:14px;color:var(--primary);
+      text-align:center;margin:12px 0;letter-spacing:.02em;
+    }
+    .data-box{
+      background:var(--surface2);border-radius:9px;
+      padding:11px 14px;margin:10px 0;font-size:13px;
+      line-height:1.7;color:var(--ink);
+    }
+    .data-box strong{color:var(--primary)}
+
+    /* Diagrama / gráfico SVG inline */
+    .graph-wrap{
+      background:#fff;border:1px solid var(--line);
+      border-radius:10px;padding:14px;margin:14px 0;overflow:hidden;
+      text-align:center;
+    }
+    .graph-wrap svg,.graph-wrap img{max-width:100%;height:auto;display:block;margin:0 auto}
+    .graph-cap{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+
+    .opts{display:grid;gap:9px;margin-top:14px}
+    .obtn{
+      width:100%;text-align:left;padding:11px 14px;
+      border-radius:9px;border:1.5px solid var(--line);
+      background:#fff;color:var(--ink);
+      font-size:14px;line-height:1.5;cursor:pointer;
+      font-family:'DM Sans',sans-serif;
+      transition:background .15s,border-color .15s,transform .08s;
+      display:flex;align-items:baseline;gap:10px;
+    }
+    .obtn:hover{background:var(--primary-light);border-color:rgba(27,79,138,.25)}
+    .obtn:active{transform:scale(.997)}
+    .obtn .opt-letter{
+      flex-shrink:0;width:22px;height:22px;border-radius:5px;
+      background:var(--surface2);border:1px solid var(--line);
+      font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+      color:var(--muted);display:inline-flex;align-items:center;justify-content:center;
+    }
+    .obtn.ok{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok)}
+    .obtn.ok .opt-letter{background:var(--ok);color:#fff;border-color:var(--ok)}
+    .obtn.show-correct{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok)}
+    .obtn.show-correct .opt-letter{background:var(--ok);color:#fff;border-color:var(--ok)}
+    .obtn.err{background:var(--err-bg);border-color:var(--err-border);color:var(--err)}
+    .obtn.err .opt-letter{background:var(--err);color:#fff;border-color:var(--err)}
+    .obtn:disabled{cursor:default}
+
+    .fb{display:none;margin-top:12px;padding:12px 14px;border-radius:9px;font-size:14px;line-height:1.6}
+    .fb.show{display:block}
+    .fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-border)}
+    .fb.err{background:var(--err-bg);color:var(--err);border:1px solid var(--err-border)}
+
+    /* SCORE */
+    .score-card{
+      background:var(--primary);border-radius:20px;
+      padding:28px 22px;text-align:center;margin-top:28px;
+    }
+    .score-big{font-family:'Syne',sans-serif;font-size:60px;font-weight:800;color:#fff;line-height:1;margin-bottom:4px}
+    .score-big em{color:rgba(255,255,255,.45);font-style:normal;font-size:34px}
+    .score-sub{font-size:12px;color:rgba(255,255,255,.55);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+    .score-bar-wrap{background:rgba(255,255,255,.15);border-radius:999px;height:7px;margin:16px auto;max-width:300px;overflow:hidden}
+    .score-bar{height:100%;border-radius:999px;background:#fff;transition:width .9s cubic-bezier(.4,0,.2,1);width:0%}
+    .score-msg{font-size:15px;color:rgba(255,255,255,.75);margin-bottom:22px;line-height:1.6;max-width:46ch;margin-left:auto;margin-right:auto}
+    .score-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .sbtn{padding:11px 22px;border-radius:9px;font-size:14px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;letter-spacing:.04em;transition:opacity .15s,transform .1s}
+    .sbtn:hover{opacity:.85}
+    .sbtn:active{transform:translateY(1px)}
+    .sbtn-light{background:#fff;color:var(--primary);border:none}
+    .sbtn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,.35);color:rgba(255,255,255,.8)}
+    .sbtn-submit{background:linear-gradient(135deg,#C05A00,#E07820);color:#fff;border:none;font-size:15px;padding:13px 28px}
+    .sbtn-submit:disabled{opacity:.4;cursor:not-allowed}
+    .submit-status{margin-top:14px;padding:12px 15px;border-radius:9px;font-size:14px;line-height:1.55;display:none}
+    .submit-status.show{display:block}
+    .submit-status.sending{background:rgba(255,255,255,.12);color:rgba(255,255,255,.85)}
+    .submit-status.done{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-border)}
+    .submit-status.fail{background:var(--err-bg);color:var(--err);border:1px solid var(--err-border)}
+    .footer-note{text-align:center;font-size:12px;color:rgba(0,0,0,.3);margin-top:22px}
+
+    @media(max-width:600px){.wrap{padding:16px 11px 52px}.hero{padding:22px 16px}.qtxt{font-size:14px}.obtn{font-size:13px}.theory{padding:18px 16px}}
+  </style>
+</head>
+<body>
+<main class="wrap">
+<div style="margin-bottom:14px"><a href="../../index.html" style="color:var(--primary);text-decoration:none;font-weight:700">← Voltar para a página inicial</a></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">Física · 1º Ano · CTUR — Guia de Estudos</div>
+    <h1>Dinâmica<br/>Teoria &amp; Treino</h1>
+    <p>Revisão dos conceitos que caem na prova: vetores, lançamento oblíquo e as Leis de Newton. Cada bloco traz uma explicação curta da matéria e, em seguida, exercícios para treinar o raciocínio — em situações diferentes das da avaliação.</p>
+    <div class="chips">
+      <div class="chip"><strong>16</strong> questões de treino</div>
+      <div class="chip"><strong>4</strong> blocos de teoria</div>
+      <div class="chip">Correção <strong>comentada</strong></div>
+    </div>
+  </section>
+
+  <div class="note">
+    💡 <strong>Como usar:</strong> Leia a teoria de cada bloco, tente resolver sozinho e só depois confira a correção.
+  </div>
+
+  <!-- IDENTIFICAÇÃO -->
+  <div class="panel">
+    <div class="panel-title">Identificação</div>
+    <div class="id-grid">
+      <label><span class="field-label">Nome completo</span>
+        <input type="text" id="inputNome" placeholder="Seu nome"/></label>
+      <label><span class="field-label">Turma</span>
+        <select id="inputTurma">
+          <option value="">Selecione...</option>
+          <option>10</option>
+          <option>11</option>
+          <option>13</option>
+          <option>16</option>
+          <option>Outra</option>
+        </select></label>
+      <label><span class="field-label">E-mail</span>
+        <input type="email" id="inputEmail" placeholder="seu@email.com"/></label>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       BLOCO 1 · VETORES
+  ══════════════════════════════ -->
+  <div class="sec-header">
+    <span class="sec-badge blue">Bloco 1</span>
+    <span class="sec-title-txt">Vetores</span>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="theory">
+    <div class="theory-tag">📘 Teoria</div>
+    <h3>Grandezas vetoriais e como somar vetores</h3>
+    <p>Grandezas <strong>escalares</strong> ficam definidas só com um número e a unidade (massa, tempo, temperatura). Já as <strong>grandezas vetoriais</strong> precisam também de uma orientação no espaço — elas têm <strong>módulo</strong> (tamanho), <strong>direção</strong> (a reta) e <strong>sentido</strong> (para que lado aponta). São vetoriais, por exemplo, a velocidade, a aceleração e a força.</p>
+    <p>Para somar vetores, o resultado depende de como eles estão orientados:</p>
+    <ul>
+      <li><strong>Mesma direção e mesmo sentido:</strong> os módulos se somam.</li>
+      <li><strong>Mesma direção e sentidos opostos:</strong> subtraímos os módulos; a resultante aponta para o lado do maior.</li>
+      <li><strong>Perpendiculares (90°):</strong> usamos o Teorema de Pitágoras.</li>
+      <li><strong>Caso geral:</strong> ligamos os vetores "ponta com origem" (regra do polígono); a resultante vai da origem do primeiro à ponta do último.</li>
+    </ul>
+    <div class="formula-box">Perpendiculares:  R = √(a² + b²)</div>
+    <div class="graph-wrap">
+      <img src="diagramas_dinamica_assets/regra_poligono.svg" alt="Soma de vetores pela regra do polígono">
+      <div class="graph-cap">Regra do polígono: <strong>a</strong> e <strong>b</strong> ligados ponta-com-origem; a resultante <strong>R</strong> fecha o caminho.</div>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="qcard" id="q1">
+    <div class="qhead"><div class="qnum">1</div></div>
+    <div class="qtxt">Assinale a alternativa que apresenta <strong>somente grandezas vetoriais</strong>:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q1','fb1',this,1)"><span class="opt-letter">A</span>massa, tempo e temperatura</button>
+      <button class="obtn" onclick="mc('q1','fb1',this,2)"><span class="opt-letter">B</span>velocidade, aceleração e força</button>
+      <button class="obtn" onclick="mc('q1','fb1',this,3)"><span class="opt-letter">C</span>energia, tempo e massa</button>
+      <button class="obtn" onclick="mc('q1','fb1',this,4)"><span class="opt-letter">D</span>temperatura, distância e tempo</button>
+    </div>
+    <div class="fb" id="fb1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qcard" id="q2">
+    <div class="qhead"><div class="qnum">2</div></div>
+    <div class="qtxt">Dois vetores <strong>perpendiculares</strong> entre si têm módulos <strong>6</strong> e <strong>8</strong>. O módulo do vetor resultante é:</div>
+    <div class="graph-wrap">
+      <img src="diagramas_dinamica_assets/vetores_6_8.svg" alt="Dois vetores perpendiculares de módulos 6 e 8">
+    </div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q2','fb2',this,1)"><span class="opt-letter">A</span>2</button>
+      <button class="obtn" onclick="mc('q2','fb2',this,2)"><span class="opt-letter">B</span>10</button>
+      <button class="obtn" onclick="mc('q2','fb2',this,3)"><span class="opt-letter">C</span>14</button>
+      <button class="obtn" onclick="mc('q2','fb2',this,4)"><span class="opt-letter">D</span>48</button>
+    </div>
+    <div class="fb" id="fb2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qcard" id="q3">
+    <div class="qhead"><div class="qnum">3</div></div>
+    <div class="qtxt">Dois vetores de <strong>mesma direção</strong> e <strong>sentidos opostos</strong> têm módulos <strong>10 N</strong> e <strong>4 N</strong>. O módulo da resultante é:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q3','fb3',this,1)"><span class="opt-letter">A</span>14 N</button>
+      <button class="obtn" onclick="mc('q3','fb3',this,2)"><span class="opt-letter">B</span>40 N</button>
+      <button class="obtn" onclick="mc('q3','fb3',this,3)"><span class="opt-letter">C</span>6 N</button>
+      <button class="obtn" onclick="mc('q3','fb3',this,4)"><span class="opt-letter">D</span>0</button>
+    </div>
+    <div class="fb" id="fb3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qcard" id="q4">
+    <div class="qhead"><div class="qnum">4</div></div>
+    <div class="qtxt">Somando dois vetores de módulos <strong>5</strong> e <strong>9</strong>, e variando o ângulo entre eles, o módulo da resultante pode assumir valores entre:</div>
+    <div class="tip">O menor valor ocorre quando eles têm sentidos opostos; o maior, quando têm o mesmo sentido.</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q4','fb4',this,1)"><span class="opt-letter">A</span>0 e 14</button>
+      <button class="obtn" onclick="mc('q4','fb4',this,2)"><span class="opt-letter">B</span>4 e 14</button>
+      <button class="obtn" onclick="mc('q4','fb4',this,3)"><span class="opt-letter">C</span>5 e 9</button>
+      <button class="obtn" onclick="mc('q4','fb4',this,4)"><span class="opt-letter">D</span>4 e 45</button>
+    </div>
+    <div class="fb" id="fb4"></div>
+  </div>
+
+  <!-- ══════════════════════════════
+       BLOCO 2 · LANÇAMENTO OBLÍQUO
+  ══════════════════════════════ -->
+  <div class="sec-header">
+    <span class="sec-badge orange">Bloco 2</span>
+    <span class="sec-title-txt">Lançamento Oblíquo</span>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="theory">
+    <div class="theory-tag">📘 Teoria</div>
+    <h3>Dois movimentos ao mesmo tempo</h3>
+    <p>No lançamento oblíquo o corpo descreve uma <strong>parábola</strong>. O truque é separar o movimento em dois eixos independentes, decompondo a velocidade inicial com o ângulo <em>θ</em>:</p>
+    <div class="formula-box">vₓ = v₀·cos θ</div>
+    <div class="formula-box">v₀ᵧ = v₀·sen θ</div>
+    <ul>
+      <li><strong>Eixo horizontal (x):</strong> sem força → vₓ é <strong>constante</strong> (MRU) o tempo todo.</li>
+      <li><strong>Eixo vertical (y):</strong> só a gravidade age → é um <strong>MUV</strong>, como um lançamento vertical.</li>
+      <li>No <strong>ponto mais alto</strong>: vᵧ = 0, mas vₓ continua existindo (a velocidade total não é nula!).</li>
+      <li><strong>Tempo de subida:</strong> t = v₀ᵧ / g. Como a trajetória é simétrica, o tempo total de voo é o dobro disso.</li>
+      <li><strong>Altura máxima:</strong> H = v₀ᵧ² / (2g). O <strong>alcance</strong> é máximo quando θ = 45°.</li>
+    </ul>
+    <div class="graph-wrap">
+      <img src="diagramas_dinamica_assets/lancamento_obliquo.svg" alt="Trajetória parabólica do lançamento oblíquo">
+      <div class="graph-cap">No topo a componente vertical zera; a horizontal permanece constante o tempo todo.</div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qcard" id="q5">
+    <div class="qhead"><div class="qnum">5</div></div>
+    <div class="qtxt">Num lançamento oblíquo, desprezando a resistência do ar, <strong>no ponto mais alto</strong> da trajetória:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q5','fb5',this,1)"><span class="opt-letter">A</span>a velocidade do projétil é totalmente nula.</button>
+      <button class="obtn" onclick="mc('q5','fb5',this,2)"><span class="opt-letter">B</span>apenas a componente vertical da velocidade é nula.</button>
+      <button class="obtn" onclick="mc('q5','fb5',this,3)"><span class="opt-letter">C</span>apenas a componente horizontal da velocidade é nula.</button>
+      <button class="obtn" onclick="mc('q5','fb5',this,4)"><span class="opt-letter">D</span>a aceleração do projétil é nula.</button>
+    </div>
+    <div class="fb" id="fb5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qcard" id="q6">
+    <div class="qhead"><div class="qnum">6</div></div>
+    <div class="qtxt">Uma bola é chutada do chão com velocidade de <strong>20 m/s</strong>, formando <strong>30°</strong> com a horizontal. A altura máxima que ela atinge é:</div>
+    <div class="data-box">Considere: <strong>sen 30° = 0,5</strong>; <strong>g = 10 m/s²</strong>. Despreze a resistência do ar.</div>
+    <div class="tip">Use só a componente vertical: v₀ᵧ = v₀·sen θ. Depois aplique H = v₀ᵧ² / (2g).</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q6','fb6',this,1)"><span class="opt-letter">A</span>5 m</button>
+      <button class="obtn" onclick="mc('q6','fb6',this,2)"><span class="opt-letter">B</span>10 m</button>
+      <button class="obtn" onclick="mc('q6','fb6',this,3)"><span class="opt-letter">C</span>20 m</button>
+      <button class="obtn" onclick="mc('q6','fb6',this,4)"><span class="opt-letter">D</span>2,5 m</button>
+    </div>
+    <div class="fb" id="fb6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="qcard" id="q7">
+    <div class="qhead"><div class="qnum">7</div></div>
+    <div class="qtxt">Num lançamento oblíquo, um objeto leva <strong>2 s</strong> para atingir a altura máxima. Desprezando a resistência do ar, o tempo total de voo (até voltar à altura de lançamento) é:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q7','fb7',this,1)"><span class="opt-letter">A</span>2 s</button>
+      <button class="obtn" onclick="mc('q7','fb7',this,2)"><span class="opt-letter">B</span>4 s</button>
+      <button class="obtn" onclick="mc('q7','fb7',this,3)"><span class="opt-letter">C</span>1 s</button>
+      <button class="obtn" onclick="mc('q7','fb7',this,4)"><span class="opt-letter">D</span>8 s</button>
+    </div>
+    <div class="fb" id="fb7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="qcard" id="q8">
+    <div class="qhead"><div class="qnum">8</div></div>
+    <div class="qtxt">Durante o voo de um projétil lançado obliquamente (sem resistência do ar), a <strong>componente horizontal</strong> da velocidade:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q8','fb8',this,1)"><span class="opt-letter">A</span>aumenta continuamente até o solo.</button>
+      <button class="obtn" onclick="mc('q8','fb8',this,2)"><span class="opt-letter">B</span>diminui até zerar no ponto mais alto.</button>
+      <button class="obtn" onclick="mc('q8','fb8',this,3)"><span class="opt-letter">C</span>permanece constante durante todo o movimento.</button>
+      <button class="obtn" onclick="mc('q8','fb8',this,4)"><span class="opt-letter">D</span>inverte de sentido no ponto mais alto.</button>
+    </div>
+    <div class="fb" id="fb8"></div>
+  </div>
+
+  <!-- ══════════════════════════════
+       BLOCO 3 · LEIS DE NEWTON
+  ══════════════════════════════ -->
+  <div class="sec-header">
+    <span class="sec-badge green">Bloco 3</span>
+    <span class="sec-title-txt">As Leis de Newton</span>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="theory">
+    <div class="theory-tag">📘 Teoria</div>
+    <h3>Os três princípios da Dinâmica</h3>
+    <ul>
+      <li><strong>1ª Lei (Inércia):</strong> sem força resultante, o corpo mantém seu estado — fica em repouso ou em movimento retilíneo uniforme. É a "resistência" a mudanças de movimento.</li>
+      <li><strong>2ª Lei (Princípio Fundamental):</strong> a força resultante gera aceleração na mesma direção e sentido — F = m·a. Muitas vezes ela aparece junto da cinemática: primeiro achamos <em>a</em>, depois a força.</li>
+      <li><strong>3ª Lei (Ação e Reação):</strong> se A faz força em B, então B faz em A uma força de mesmo módulo e direção, sentido oposto. As duas forças do par atuam em <strong>corpos diferentes</strong> — por isso não se cancelam.</li>
+    </ul>
+    <div class="formula-box">F_resultante = m · a</div>
+    <p>Duas forças aparecem em quase todo problema: o <strong>Peso</strong> (P = m·g, vertical para baixo) e a <strong>Normal</strong> (F<sub>N</sub>), que a superfície faz no corpo, perpendicular a ela.</p>
+    <div class="graph-wrap">
+      <img src="diagramas_dinamica_assets/normal_peso.svg" alt="Diagrama de forças: peso e força normal em um bloco">
+      <div class="graph-cap">Bloco em repouso sobre a mesa: a força normal (F<sub>N</sub>) e o peso (P) têm módulos iguais e sentidos opostos, por isso as setas foram desenhadas com o mesmo comprimento.</div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="qcard" id="q9">
+    <div class="qhead"><div class="qnum">9</div></div>
+    <div class="qtxt">Quando um ônibus freia bruscamente, um passageiro em pé é projetado para a frente. Esse fato é explicado pela:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q9','fb9',this,1)"><span class="opt-letter">A</span>1ª Lei de Newton (Inércia)</button>
+      <button class="obtn" onclick="mc('q9','fb9',this,2)"><span class="opt-letter">B</span>2ª Lei de Newton</button>
+      <button class="obtn" onclick="mc('q9','fb9',this,3)"><span class="opt-letter">C</span>3ª Lei de Newton</button>
+      <button class="obtn" onclick="mc('q9','fb9',this,4)"><span class="opt-letter">D</span>Lei da Gravitação Universal</button>
+    </div>
+    <div class="fb" id="fb9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="qcard" id="q10">
+    <div class="qhead"><div class="qnum">10</div></div>
+    <div class="qtxt">Uma força resultante de <strong>12 N</strong> atua sobre um corpo de massa <strong>4 kg</strong>. A aceleração adquirida por ele é:</div>
+    <div class="formula-box">a = F_resultante / m</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q10','fb10',this,1)"><span class="opt-letter">A</span>3 m/s²</button>
+      <button class="obtn" onclick="mc('q10','fb10',this,2)"><span class="opt-letter">B</span>48 m/s²</button>
+      <button class="obtn" onclick="mc('q10','fb10',this,3)"><span class="opt-letter">C</span>8 m/s²</button>
+      <button class="obtn" onclick="mc('q10','fb10',this,4)"><span class="opt-letter">D</span>16 m/s²</button>
+    </div>
+    <div class="fb" id="fb10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="qcard" id="q11">
+    <div class="qhead"><div class="qnum">11</div></div>
+    <div class="qtxt">Um corpo de <strong>2 kg</strong>, partindo do repouso, atinge a velocidade de <strong>10 m/s</strong> após <strong>5 s</strong> de movimento. A força resultante que atua sobre ele vale:</div>
+    <div class="tip">Primeiro ache a aceleração (a = Δv/Δt); depois aplique F = m·a.</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q11','fb11',this,1)"><span class="opt-letter">A</span>4 N</button>
+      <button class="obtn" onclick="mc('q11','fb11',this,2)"><span class="opt-letter">B</span>20 N</button>
+      <button class="obtn" onclick="mc('q11','fb11',this,3)"><span class="opt-letter">C</span>10 N</button>
+      <button class="obtn" onclick="mc('q11','fb11',this,4)"><span class="opt-letter">D</span>2 N</button>
+    </div>
+    <div class="fb" id="fb11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="qcard" id="q12">
+    <div class="qhead"><div class="qnum">12</div></div>
+    <div class="qtxt">Sobre o par <strong>ação–reação</strong> descrito pela 3ª Lei de Newton, é correto afirmar que as duas forças:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q12','fb12',this,1)"><span class="opt-letter">A</span>têm mesmo módulo, mesma direção e atuam no mesmo corpo.</button>
+      <button class="obtn" onclick="mc('q12','fb12',this,2)"><span class="opt-letter">B</span>têm módulos diferentes e por isso se cancelam.</button>
+      <button class="obtn" onclick="mc('q12','fb12',this,3)"><span class="opt-letter">C</span>têm mesmo módulo e sentidos opostos, atuando em corpos diferentes.</button>
+      <button class="obtn" onclick="mc('q12','fb12',this,4)"><span class="opt-letter">D</span>sempre se equilibram, deixando qualquer corpo em repouso.</button>
+    </div>
+    <div class="fb" id="fb12"></div>
+  </div>
+
+  <!-- ══════════════════════════════
+       BLOCO 4 · APLICAÇÕES DA DINÂMICA
+  ══════════════════════════════ -->
+  <div class="sec-header">
+    <span class="sec-badge blue">Bloco 4</span>
+    <span class="sec-title-txt">Aplicações: Peso, Normal e Sistemas</span>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="theory">
+    <div class="theory-tag">📘 Teoria</div>
+    <h3>Peso, força normal, sistemas e peso aparente</h3>
+    <p>Não confunda: a <strong>massa</strong> (kg) mede a quantidade de matéria e não muda de lugar para lugar; o <strong>peso</strong> é uma força (N), dada por P = m·g, e depende da gravidade local (por isso muda na Lua, por exemplo).</p>
+    <p>A <strong>força normal (F<sub>N</sub>)</strong> é a reação da superfície. Ela se ajusta conforme as outras forças verticais: se você <strong>empurra o corpo para baixo</strong>, a normal aumenta (F<sub>N</sub> = P + F); se você <strong>puxa para cima</strong>, ela diminui (F<sub>N</sub> = P − F).</p>
+    <p>Em <strong>sistemas de blocos</strong> que se movem juntos, a aceleração sai do conjunto (a = F / m_total). Para achar a <strong>tração no fio</strong> ou a <strong>força de contato</strong>, isolamos um dos blocos e aplicamos F = m·a só nele.</p>
+    <p>A balança não mede o peso, e sim a <strong>normal</strong>. Num elevador acelerado, ela marca o <strong>peso aparente</strong>:</p>
+    <ul>
+      <li>Repouso ou velocidade constante: <strong>F<sub>N</sub> = m·g</strong>;</li>
+      <li>Aceleração para cima: <strong>F<sub>N</sub> = m(g + a)</strong> — parece mais pesado;</li>
+      <li>Aceleração para baixo: <strong>F<sub>N</sub> = m(g − a)</strong> — parece mais leve;</li>
+      <li>Queda livre (a = g): <strong>F<sub>N</sub> = 0</strong>.</li>
+    </ul>
+    <div class="formula-box">P = m·g        F<sub>N</sub> = m·(g ± a)</div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="qcard" id="q13">
+    <div class="qhead"><div class="qnum">13</div></div>
+    <div class="qtxt">Um astronauta tem massa de <strong>80 kg</strong>. Na Lua, onde a gravidade vale <strong>g = 1,6 m/s²</strong>, o seu peso é:</div>
+    <div class="tip">A massa continua 80 kg em qualquer lugar. O peso é uma força: P = m·g.</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q13','fb13',this,1)"><span class="opt-letter">A</span>80 N</button>
+      <button class="obtn" onclick="mc('q13','fb13',this,2)"><span class="opt-letter">B</span>128 N</button>
+      <button class="obtn" onclick="mc('q13','fb13',this,3)"><span class="opt-letter">C</span>800 N</button>
+      <button class="obtn" onclick="mc('q13','fb13',this,4)"><span class="opt-letter">D</span>128 kg</button>
+    </div>
+    <div class="fb" id="fb13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="qcard" id="q14">
+    <div class="qhead"><div class="qnum">14</div></div>
+    <div class="qtxt">Os blocos A (<strong>2 kg</strong>) e B (<strong>3 kg</strong>) estão ligados por um fio ideal sobre uma superfície horizontal <strong>sem atrito</strong>. Puxa-se o bloco A com uma força horizontal <strong>F = 20 N</strong>, e A arrasta B pelo fio. A tração no fio que liga os blocos vale:</div>
+    <div class="graph-wrap">
+      <img src="diagramas_dinamica_assets/blocos_AB.svg" alt="Blocos A e B ligados por fio, puxados por força horizontal">
+    </div>
+    <div class="tip">Ache primeiro a aceleração do conjunto. Depois isole o bloco B: a única força que o puxa é a tração.</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q14','fb14',this,1)"><span class="opt-letter">A</span>20 N</button>
+      <button class="obtn" onclick="mc('q14','fb14',this,2)"><span class="opt-letter">B</span>12 N</button>
+      <button class="obtn" onclick="mc('q14','fb14',this,3)"><span class="opt-letter">C</span>8 N</button>
+      <button class="obtn" onclick="mc('q14','fb14',this,4)"><span class="opt-letter">D</span>4 N</button>
+    </div>
+    <div class="fb" id="fb14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="qcard" id="q15">
+    <div class="qhead"><div class="qnum">15</div></div>
+    <div class="qtxt">Um livro de <strong>2 kg</strong> está em repouso sobre uma mesa horizontal (<strong>g = 10 m/s²</strong>). Uma pessoa pressiona o livro para baixo com uma força vertical de <strong>5 N</strong>. A força normal que a mesa exerce sobre o livro passa a ser:</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q15','fb15',this,1)"><span class="opt-letter">A</span>15 N</button>
+      <button class="obtn" onclick="mc('q15','fb15',this,2)"><span class="opt-letter">B</span>20 N</button>
+      <button class="obtn" onclick="mc('q15','fb15',this,3)"><span class="opt-letter">C</span>25 N</button>
+      <button class="obtn" onclick="mc('q15','fb15',this,4)"><span class="opt-letter">D</span>5 N</button>
+    </div>
+    <div class="fb" id="fb15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="qcard" id="q16">
+    <div class="qhead"><div class="qnum">16</div></div>
+    <div class="qtxt">Uma pessoa de <strong>60 kg</strong> está sobre uma balança dentro de um elevador que <strong>sobe acelerando</strong> a <strong>2 m/s²</strong> (<strong>g = 10 m/s²</strong>). A balança indica:</div>
+    <div class="tip">Acelerando para cima, a normal supera o peso: F<sub>N</sub> = m(g + a).</div>
+    <div class="opts">
+      <button class="obtn" onclick="mc('q16','fb16',this,1)"><span class="opt-letter">A</span>600 N</button>
+      <button class="obtn" onclick="mc('q16','fb16',this,2)"><span class="opt-letter">B</span>480 N</button>
+      <button class="obtn" onclick="mc('q16','fb16',this,3)"><span class="opt-letter">C</span>720 N</button>
+      <button class="obtn" onclick="mc('q16','fb16',this,4)"><span class="opt-letter">D</span>120 N</button>
+    </div>
+    <div class="fb" id="fb16"></div>
+  </div>
+
+  <!-- SCORE -->
+  <section class="score-card">
+    <div class="score-big"><span id="scoreNow">0</span><em>/16</em></div>
+    <div class="score-sub">questões corretas</div>
+    <div class="score-bar-wrap"><div class="score-bar" id="scoreBar"></div></div>
+    <div class="score-msg" id="scoreMsg">Resolva as questões para ver seu resultado.</div>
+    <div class="score-btns">
+      <button class="sbtn sbtn-ghost" onclick="resetQuiz()">Recomeçar</button>
+      <button class="sbtn sbtn-submit" id="btnEnviar" onclick="enviarResultado()">Enviar ao professor</button>
+    </div>
+    <div class="submit-status" id="submitStatus"></div>
+  </section>
+
+  <p class="footer-note">CTUR · UFRRJ · Física — Dinâmica: Guia de Estudos</p>
+
+</main>
+<script>
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTqm_d3OdtA4LHSNlpSUxn-i4lVgyRbAuyRMp1XHlKWrndbf2pVIZg1vxxxb6UTP6Y3w/exec";
+  const TOTAL = 16;
+  const QUIZ_ID = 'dinamica-estudo';
+  const QUIZ_TITULO = 'Dinâmica: Guia de Estudos';
+  const QUIZ_VERSAO = 'v1';
+
+  const answerKey = {
+    q1:2,   // velocidade, aceleração e força
+    q2:2,   // 10
+    q3:3,   // 6 N
+    q4:2,   // 4 e 14
+    q5:2,   // apenas a componente vertical é nula
+    q6:1,   // 5 m
+    q7:2,   // 4 s
+    q8:3,   // permanece constante
+    q9:1,   // 1ª Lei (inércia)
+    q10:1,  // 3 m/s²
+    q11:1,  // 4 N
+    q12:3,  // mesmo módulo, sentidos opostos, corpos diferentes
+    q13:2,  // 128 N
+    q14:2,  // 12 N
+    q15:3,  // 25 N
+    q16:3,  // 720 N
+  };
+
+  const feedbacks = {
+    q1:{
+      ok:'Correto! Velocidade, aceleração e força precisam de módulo, direção e sentido — são vetoriais. Massa, tempo, temperatura, energia e distância são escalares (só número e unidade).',
+      err:'Vetoriais são as que têm orientação no espaço: velocidade, aceleração e força. Massa, tempo, temperatura e energia são escalares. Resposta: B.'
+    },
+    q2:{
+      ok:'Correto! Como os vetores são perpendiculares, usamos Pitágoras: R = √(6² + 8²) = √(36 + 64) = √100 = 10.',
+      err:'Vetores perpendiculares → Pitágoras: R = √(6² + 8²) = √100 = 10. (Não é 14, que valeria só se fossem de mesmo sentido.)'
+    },
+    q3:{
+      ok:'Correto! Mesma direção e sentidos opostos: subtraímos os módulos. R = 10 − 4 = 6 N, no sentido do vetor de 10 N.',
+      err:'Sentidos opostos → subtrai: R = 10 − 4 = 6 N (apontando para o lado do maior). Se fossem o mesmo sentido, daria 14 N.'
+    },
+    q4:{
+      ok:'Correto! O mínimo é quando os sentidos são opostos: 9 − 5 = 4. O máximo é quando têm o mesmo sentido: 9 + 5 = 14. A resultante fica entre 4 e 14.',
+      err:'Mínimo (opostos): 9 − 5 = 4. Máximo (mesmo sentido): 9 + 5 = 14. Logo, a resultante varia entre 4 e 14.'
+    },
+    q5:{
+      ok:'Correto! No topo, apenas a componente vertical zera (vᵧ = 0). A horizontal continua, então a velocidade total NÃO é nula. E a gravidade segue agindo, logo a aceleração também não é zero.',
+      err:'No ponto mais alto, só a componente vertical é nula. A horizontal permanece, então a velocidade total não zera. Resposta: B.'
+    },
+    q6:{
+      ok:'Correto! v₀ᵧ = 20 × sen 30° = 20 × 0,5 = 10 m/s. Altura máxima: H = v₀ᵧ²/(2g) = 10²/(2·10) = 100/20 = 5 m.',
+      err:'Use a componente vertical: v₀ᵧ = 20 × 0,5 = 10 m/s. Então H = v₀ᵧ²/(2g) = 100/20 = 5 m.'
+    },
+    q7:{
+      ok:'Correto! A trajetória é simétrica: o tempo de descida é igual ao de subida. Logo, o tempo total é 2 × 2 = 4 s.',
+      err:'Por simetria, descida = subida. Tempo total = 2 × tempo de subida = 2 × 2 = 4 s.'
+    },
+    q8:{
+      ok:'Correto! Sem resistência do ar, não há força na horizontal, então a componente horizontal da velocidade é constante o tempo todo (MRU no eixo x).',
+      err:'No eixo horizontal não há força, então vₓ é constante durante todo o voo. Resposta: C.'
+    },
+    q9:{
+      ok:'Correto! O passageiro tende a manter seu movimento por inércia, enquanto o ônibus freia. Isso é a 1ª Lei de Newton.',
+      err:'É a inércia: o corpo tende a manter seu estado de movimento. Trata-se da 1ª Lei de Newton.'
+    },
+    q10:{
+      ok:'Correto! Pela 2ª Lei: a = F/m = 12/4 = 3 m/s².',
+      err:'Aplique a 2ª Lei: a = F/m = 12/4 = 3 m/s².'
+    },
+    q11:{
+      ok:'Correto! Primeiro a aceleração: a = Δv/Δt = 10/5 = 2 m/s². Depois a força: F = m·a = 2 × 2 = 4 N.',
+      err:'Ache a aceleração: a = 10/5 = 2 m/s². Então F = m·a = 2 × 2 = 4 N.'
+    },
+    q12:{
+      ok:'Correto! O par ação–reação tem forças de mesmo módulo e direção, sentidos opostos, e — o ponto-chave — atuam em corpos diferentes. Por isso não se cancelam.',
+      err:'As forças do par têm mesmo módulo e sentidos opostos, mas atuam em corpos DIFERENTES (por isso não se cancelam). Resposta: C.'
+    },
+    q13:{
+      ok:'Correto! A massa continua 80 kg. O peso é uma força: P = m·g = 80 × 1,6 = 128 N.',
+      err:'Massa não muda (80 kg). O peso é P = m·g = 80 × 1,6 = 128 N (em newtons, não kg).'
+    },
+    q14:{
+      ok:'Correto! Conjunto: a = F/(m_A + m_B) = 20/5 = 4 m/s². Isolando B, a única força é a tração: T = m_B·a = 3 × 4 = 12 N.',
+      err:'Aceleração do conjunto: a = 20/(2+3) = 4 m/s². Isole B: T = m_B·a = 3 × 4 = 12 N.'
+    },
+    q15:{
+      ok:'Correto! O peso é P = m·g = 2 × 10 = 20 N. Como a força de 5 N empurra para baixo, a normal aumenta: F<sub>N</sub> = P + F = 20 + 5 = 25 N.',
+      err:'P = 2 × 10 = 20 N. A força para baixo se soma ao peso: F<sub>N</sub> = P + F = 20 + 5 = 25 N.'
+    },
+    q16:{
+      ok:'Correto! Acelerando para cima: F<sub>N</sub> = m(g + a) = 60 × (10 + 2) = 60 × 12 = 720 N (peso aparente maior que o real, que é 600 N).',
+      err:'Subindo acelerado: F<sub>N</sub> = m(g + a) = 60 × 12 = 720 N. O peso real seria 600 N.'
+    }
+  };
+
+  const state = {};
+
+  function disableQuestion(card){card.querySelectorAll('.obtn').forEach(b=>b.disabled=true)}
+  function showCorrect(cardId){
+    const card=document.getElementById(cardId);
+    const btns=[...card.querySelectorAll('.obtn')];
+    const ri=answerKey[cardId]-1;
+    if(btns[ri]&&!btns[ri].classList.contains('ok')) btns[ri].classList.add('show-correct');
+  }
+  function mc(cardId,fbId,btn,chosen){
+    if(state[cardId]!==undefined) return;
+    const correct=answerKey[cardId];
+    const isRight=chosen===correct;
+    state[cardId]={chosen,isRight};
+    const card=document.getElementById(cardId);
+    const fb=document.getElementById(fbId);
+    btn.classList.add(isRight?'ok':'err');
+    card.classList.add(isRight?'ok':'err');
+    fb.className='fb show '+(isRight?'ok':'err');
+    fb.innerHTML=(isRight?'✓ ':'✗ ')+feedbacks[cardId][isRight?'ok':'err'];
+    if(!isRight) showCorrect(cardId);
+    disableQuestion(card);
+    updateScore();
+  }
+  function updateScore(){
+    const answered=Object.keys(state).length;
+    const points=Object.values(state).filter(s=>s.isRight).length;
+    document.getElementById('scoreNow').textContent=points;
+    document.getElementById('scoreBar').style.width=Math.round(points/TOTAL*100)+'%';
+    let msg='Resolva as questões para ver seu resultado.';
+    if(answered>0&&answered<TOTAL) msg=`${answered} de ${TOTAL} respondidas · ${points} corretas até agora.`;
+    if(answered===TOTAL){
+      if(points<=6) msg='Você terminou. Releia a teoria de cada bloco com calma e refaça as questões — foque em peso × massa e na decomposição de vetores.';
+      else if(points<=10) msg='Bom trabalho! A base está firme. Revise os erros, especialmente lançamento oblíquo e força normal.';
+      else if(points<=14) msg='Muito bem! Resultado sólido. Fique atento ao peso aparente no elevador e às trações em sistemas de blocos.';
+      else msg='Excelente! Domínio completo da Dinâmica. Pronto para a prova. Parabéns!';
+    }
+    document.getElementById('scoreMsg').textContent=msg;
+  }
+  function resetQuiz(){
+    for(const k of Object.keys(state)) delete state[k];
+    document.querySelectorAll('.qcard').forEach(card=>{
+      card.classList.remove('ok','err');
+      card.querySelectorAll('.obtn').forEach(b=>{b.disabled=false;b.classList.remove('ok','err','show-correct');});
+    });
+    document.querySelectorAll('.fb').forEach(fb=>{fb.className='fb';fb.innerHTML='';});
+    const st=document.getElementById('submitStatus');
+    st.className='submit-status';st.innerHTML='';
+    document.getElementById('btnEnviar').disabled=false;
+    updateScore();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  async function enviarResultado(){
+    const nome=document.getElementById('inputNome').value.trim();
+    const turma=document.getElementById('inputTurma').value;
+    const email=document.getElementById('inputEmail').value.trim();
+    let ok=true;
+    ['inputNome','inputTurma'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(!el.value.trim()){el.classList.add('error');ok=false;}
+      else el.classList.remove('error');
+    });
+    if(!ok){alert('Preencha Nome e Turma antes de enviar.');return;}
+    const answered=Object.keys(state).length;
+    if(answered<TOTAL){if(!confirm(`Você respondeu ${answered} de ${TOTAL} questões. Enviar assim mesmo?`))return;}
+    const btn=document.getElementById('btnEnviar');
+    const st=document.getElementById('submitStatus');
+    btn.disabled=true;
+    st.className='submit-status sending show';
+    st.innerHTML='⏳ Enviando…';
+    const points=Object.values(state).filter(s=>s.isRight).length;
+    const payload={timestamp:new Date().toLocaleString('pt-BR'),quizId:QUIZ_ID,quizTitulo:QUIZ_TITULO,versao:QUIZ_VERSAO,nome,turma,email,
+      nota:points,total:TOTAL,percentual:Math.round(points/TOTAL*100)};
+    for(const qid of Object.keys(answerKey)){
+      const s=state[qid];
+      payload['resp_'+qid]=s?s.chosen:'';
+      payload['ok_'+qid]=s?(s.isRight?1:0):'';
+    }
+    try{
+      await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',
+        headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      st.className='submit-status done show';
+      st.innerHTML=`✅ Enviado! ${nome} · ${turma} · ${points}/${TOTAL} (${payload.percentual}%)`;
+    }catch(e){
+      st.className='submit-status fail show';
+      st.innerHTML='❌ Falha no envio. Verifique sua conexão e tente novamente.';
+      btn.disabled=false;
+    }
+  }
+  updateScore();
+</script>
+</body>
+</html>

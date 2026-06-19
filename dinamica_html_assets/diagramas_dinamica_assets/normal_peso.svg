@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 640 320"
+   role="img"
+   aria-label="Diagrama de forças: peso P e força normal F_N em um bloco em repouso"
+   version="1.1"
+   id="svg11"
+   sodipodi:docname="normal_peso.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview11"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.7832349"
+     inkscape:cx="319.9242"
+     inkscape:cy="160.10229"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg11" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Triangle"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+    <marker
+       id="up"
+       markerWidth="12"
+       markerHeight="12"
+       refX="10"
+       refY="4"
+       orient="auto">
+      <path
+         d="M0,0 L10,4 L0,8 Z"
+         fill="#1B4F8A"
+         id="path1" />
+    </marker>
+    <marker
+       id="down"
+       markerWidth="10"
+       markerHeight="8"
+       refX="10"
+       refY="4"
+       orient="auto"
+       viewBox="0 0 10 8"
+       preserveAspectRatio="xMidYMid">
+      <path
+         d="M0,0 L10,4 L0,8 Z"
+         fill="#8B1A1A"
+         id="path2" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-0"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-0-8"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9-2" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-0-8-5"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9-2-1" />
+    </marker>
+  </defs>
+  <rect
+     width="640"
+     height="320"
+     rx="18"
+     fill="#fff"
+     id="rect2" />
+  <line
+     x1="70"
+     y1="230"
+     x2="570"
+     y2="230"
+     stroke="#6B6860"
+     stroke-width="5"
+     stroke-linecap="round"
+     id="line2" />
+  <g
+     stroke="#6B6860"
+     stroke-width="3"
+     opacity="0.75"
+     id="g8">
+    <line
+       x1="95"
+       y1="230"
+       x2="70"
+       y2="260"
+       id="line3" />
+    <line
+       x1="145"
+       y1="230"
+       x2="120"
+       y2="260"
+       id="line4" />
+    <line
+       x1="195"
+       y1="230"
+       x2="170"
+       y2="260"
+       id="line5" />
+    <line
+       x1="245"
+       y1="230"
+       x2="220"
+       y2="260"
+       id="line6" />
+    <line
+       x1="295"
+       y1="230"
+       x2="270"
+       y2="260"
+       id="line7" />
+    <line
+       x1="345"
+       y1="230"
+       x2="320"
+       y2="260"
+       id="line8" />
+  </g>
+  <rect
+     x="235"
+     y="135"
+     width="170"
+     height="95"
+     rx="12"
+     fill="#EEE9DF"
+     stroke="#6B6860"
+     stroke-width="4"
+     id="rect8" />
+  <!-- Equal lengths because block is in vertical equilibrium -->
+  <text
+     x="338"
+     y="106"
+     fill="#1B4F8A"
+     font-family="JetBrains Mono, monospace"
+     font-size="34"
+     font-weight="800"
+     id="text9">F<tspan
+   baseline-shift="sub"
+   font-size="22"
+   id="tspan9">N</tspan></text>
+  <text
+     x="338"
+     y="272"
+     fill="#8B1A1A"
+     font-family="JetBrains Mono, monospace"
+     font-size="34"
+     font-weight="800"
+     id="text10">P</text>
+  <text
+     x="422"
+     y="72"
+     fill="#6B6860"
+     font-family="DM Sans, sans-serif"
+     font-size="16"
+     id="text11">Em repouso: |F<tspan
+   baseline-shift="sub"
+   font-size="12"
+   id="tspan10">N</tspan>| = |P|</text>
+  <path
+     style="fill:#0cf915;stroke:#7a2124;stroke-width:1.729;stroke-opacity:1;marker-end:url(#Triangle)"
+     d="M 316.0347,180.22946 V 306.72264"
+     id="path11"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:#0cf915;stroke:#212d7a;stroke-width:1.729;stroke-opacity:1;marker-end:url(#Triangle-0)"
+     d="M 316.14908,180.80399 V 54.310814"
+     id="path11-8"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:#0cf915;stroke:#212d7a;stroke-width:0.59332;stroke-opacity:1;marker-end:url(#Triangle-0-8)"
+     d="m 341.99128,77.185151 14.89519,0.0932"
+     id="path11-8-5"
+     sodipodi:nodetypes="cc"
+     inkscape:transform-center-x="-4.1023813"
+     inkscape:transform-center-y="-10.746336" />
+  <path
+     style="fill:#0cf915;stroke:#7a2521;stroke-width:0.59332;stroke-opacity:1;marker-end:url(#Triangle-0-8-5)"
+     d="m 341.60533,243.23506 14.89519,0.0932"
+     id="path11-8-5-1"
+     sodipodi:nodetypes="cc"
+     inkscape:transform-center-x="-4.1023813"
+     inkscape:transform-center-y="-10.746336" />
+</svg>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 760 220"
+   role="img"
+   aria-label="Blocos B e A ligados por fio, puxados por força horizontal F igual a 20 N em superfície sem atrito"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="blocos_AB.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.1644737"
+     inkscape:cx="380"
+     inkscape:cy="109.49153"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="ArrowTriangleStylized"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Stylized triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m 6,0 c -3,1 -7,3 -9,5 0,0 0,-4 2,-5 -2,-1 -2,-5 -2,-5 2,2 6,4 9,5 z"
+         id="path4" />
+    </marker>
+    <marker
+       id="force"
+       markerWidth="12"
+       markerHeight="12"
+       refX="10"
+       refY="4"
+       orient="auto">
+      <path
+         d="M0,0 L10,4 L0,8 Z"
+         fill="#C05A00"
+         id="path1" />
+    </marker>
+  </defs>
+  <rect
+     width="760"
+     height="220"
+     rx="18"
+     fill="#fff"
+     id="rect1" />
+  <line
+     x1="50"
+     y1="170"
+     x2="715"
+     y2="170"
+     stroke="#6B6860"
+     stroke-width="5"
+     stroke-linecap="round"
+     id="line1" />
+  <text
+     x="574.4859"
+     y="189.20905"
+     fill="#6b6860"
+     font-family="'DM Sans', sans-serif"
+     font-size="15px"
+     id="text1">superfície sem atrito</text>
+  <rect
+     x="145"
+     y="90"
+     width="105"
+     height="80"
+     rx="10"
+     fill="#FFF3E8"
+     stroke="#C05A00"
+     stroke-width="4"
+     id="rect2" />
+  <text
+     x="197.5"
+     y="138"
+     text-anchor="middle"
+     fill="#C05A00"
+     font-family="Syne, sans-serif"
+     font-size="42"
+     font-weight="800"
+     id="text2">B</text>
+  <text
+     x="197.5"
+     y="78"
+     text-anchor="middle"
+     fill="#C05A00"
+     font-family="JetBrains Mono, monospace"
+     font-size="18"
+     font-weight="700"
+     id="text3">3 kg</text>
+  <line
+     x1="250"
+     y1="130"
+     x2="360"
+     y2="130"
+     stroke="#6B6860"
+     stroke-width="5"
+     stroke-linecap="round"
+     id="line3" />
+  <circle
+     cx="250"
+     cy="130"
+     r="4"
+     fill="#6B6860"
+     id="circle3" />
+  <circle
+     cx="360"
+     cy="130"
+     r="4"
+     fill="#6B6860"
+     id="circle4" />
+  <rect
+     x="360"
+     y="80"
+     width="120"
+     height="90"
+     rx="10"
+     fill="#EAF0FA"
+     stroke="#1B4F8A"
+     stroke-width="4"
+     id="rect4" />
+  <text
+     x="420"
+     y="136"
+     text-anchor="middle"
+     fill="#1B4F8A"
+     font-family="Syne, sans-serif"
+     font-size="44"
+     font-weight="800"
+     id="text4">A</text>
+  <text
+     x="420"
+     y="67"
+     text-anchor="middle"
+     fill="#1B4F8A"
+     font-family="JetBrains Mono, monospace"
+     font-size="18"
+     font-weight="700"
+     id="text5">2 kg</text>
+  <text
+     x="535"
+     y="96"
+     fill="#C05A00"
+     font-family="JetBrains Mono, monospace"
+     font-size="30"
+     font-weight="800"
+     id="text6">F = 20 N</text>
+  <path
+     style="fill:#d82222;stroke:#e5841b;stroke-width:4.6;stroke-dasharray:none;marker-end:url(#ArrowTriangleStylized);fill-opacity:1;stroke-opacity:1"
+     d="M 479.18644,123.66102 H 628.61017"
+     id="path6" />
+</svg>
